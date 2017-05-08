@@ -1,3 +1,15 @@
 <resources>
     <string name="app_name">TimeManagement</string>
+    <string name="title">Title:</string>
+    <string name="duedate">Duedate:</string>
+    <string name="time">Time:</string>
+    <string name="unitcode">UnitCode:</string>
+    <string name="urgency">Urgency:</string>
+    <string name="important">Important:</string>
+    <string name="weight">Weight:</string>
+    <string name="notify">Notification:</string>
+    <string name="detail">Detail:</string>
+    <string name="low">Low</string>
+    <string name="high">High</string>
+
 </resources>
