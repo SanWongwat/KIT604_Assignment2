@@ -93,6 +93,12 @@ public class AddActivity extends AppCompatActivity implements AdapterView.OnItem
 
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        setUnitCodeSpinner();
+    }
+
     //initialise page
     public void InitialiseAddPageUI() {
 
@@ -114,6 +120,7 @@ public class AddActivity extends AppCompatActivity implements AdapterView.OnItem
                 df.show(getFragmentManager(), "Calendar");
             }
         });
+
         EditText et_time = (EditText) findViewById(R.id.et_add_time);
         et_time.setKeyListener(null);
         et_time.setOnFocusChangeListener(new View.OnFocusChangeListener() {
@@ -132,6 +139,7 @@ public class AddActivity extends AppCompatActivity implements AdapterView.OnItem
                 df.show(getFragmentManager(), "TimePicker");
             }
         });
+
         EditText et_weight = (EditText) findViewById(R.id.et_add_weight);
         et_weight.setKeyListener(null);
         et_weight.setOnFocusChangeListener(new View.OnFocusChangeListener() {
@@ -150,6 +158,7 @@ public class AddActivity extends AppCompatActivity implements AdapterView.OnItem
                 df.show(getFragmentManager(), "WeightPicker");
             }
         });
+
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,
                 R.layout.support_simple_spinner_dropdown_item, Util._low_high_array);
         dataAdapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
@@ -162,23 +171,7 @@ public class AddActivity extends AppCompatActivity implements AdapterView.OnItem
         spn_important.setAdapter(dataAdapter);
         spn_important.setOnItemSelectedListener(this);
 
-        List<Unit> unitList = bu.GetUnitCode();
-        int arrSize = unitList.size() + 2;
-        String[] unitNameArr = new String[arrSize];
-        unitNameArr[0] = Util._FirstSpinerText;
-        unitNameArr[unitNameArr.length - 1] = Util._NewUnitcodeText;
-        for (int i = 1; i < arrSize - 1; i++) {
-            Log.d(TAG, i + "");
-            Unit u = unitList.get(i - 1);
-            unitNameArr[i] = u.getUnitId() + ": " + u.getUnitName();
-            Log.d(TAG, unitNameArr[i]);
-        }
-        dataAdapter = new ArrayAdapter<String>(this,
-                R.layout.support_simple_spinner_dropdown_item, unitNameArr);
-        dataAdapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
-        Spinner spn_unit = (Spinner) findViewById(R.id.spn_add_unitcode);
-        spn_unit.setAdapter(dataAdapter);
-        spn_unit.setOnItemSelectedListener(this);
+        setUnitCodeSpinner();
     }
 
     //add task
@@ -208,18 +201,40 @@ public class AddActivity extends AppCompatActivity implements AdapterView.OnItem
         t.setWeight(((EditText) findViewById(R.id.et_add_weight)).getText().toString());
 
         String notify = getString(R.string.isNotNotify);
-        ToggleButton tgb_notify = (ToggleButton)findViewById(R.id.tgb_add_notify);
-        if(tgb_notify.isChecked())notify = getString(R.string.isNotify);
+        ToggleButton tgb_notify = (ToggleButton) findViewById(R.id.tgb_add_notify);
+        if (tgb_notify.isChecked()) notify = getString(R.string.isNotify);
         t.setNotify(notify);
 
         t.setDetail(((EditText) findViewById(R.id.et_add_detail)).getText().toString());
         Log.d("AddTaskView", "Begin add");
 
-        boolean isSuccess = bu.InsertTask(t);
         Toast toast;
-        if(isSuccess){
-            toast = Toast.makeText(this,R.string.add_success,Toast.LENGTH_SHORT);
+        if (bu.InsertTask(t)) {
+            toast = Toast.makeText(this, R.string.add_success, Toast.LENGTH_SHORT);
+            toast.show();
+            finish();
         }
+
+    }
+
+    private void setUnitCodeSpinner() {
+        List<Unit> unitList = bu.GetUnitCode();
+        int arrSize = unitList.size() + 2;
+        String[] unitNameArr = new String[arrSize];
+        unitNameArr[0] = Util._FirstSpinerText;
+        unitNameArr[unitNameArr.length - 1] = Util._NewUnitcodeText;
+        for (int i = 1; i < arrSize - 1; i++) {
+            Log.d(TAG, i + "");
+            Unit u = unitList.get(i - 1);
+            unitNameArr[i] = u.getUnitId() + ": " + u.getUnitName();
+            Log.d(TAG, unitNameArr[i]);
+        }
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,
+                R.layout.support_simple_spinner_dropdown_item, unitNameArr);
+        dataAdapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
+        Spinner spn_unit = (Spinner) findViewById(R.id.spn_add_unitcode);
+        spn_unit.setAdapter(dataAdapter);
+        spn_unit.setOnItemSelectedListener(this);
 
     }
 

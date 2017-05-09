@@ -1,89 +1,186 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:scrollbars="vertical">
 
-    <TextView
+    <LinearLayout
+        android:id="@+id/ll_title"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/title" />
+        android:layout_height="40dp"
+        android:orientation="horizontal">
 
-    <EditText
-        android:id="@+id/et_add_title"
+        <TextView
+            android:layout_width="80dp"
+            android:layout_height="match_parent"
+            android:gravity="center|left"
+            android:text="@string/title"/>
+
+        <EditText
+            android:id="@+id/et_add_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_duedate"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-    <TextView
+        android:layout_height="40dp"
+        android:orientation="horizontal"
+        android:layout_below="@+id/ll_title">
+
+        <TextView
+            android:layout_width="80dp"
+            android:layout_height="match_parent"
+            android:gravity="center|left"
+            android:layout_below="@+id/tv_title"
+            android:text="@string/duedate" />
+
+        <EditText
+            android:id="@+id/et_add_duedate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="none" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_time"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/duedate" />
-    <EditText
-        android:id="@+id/et_add_duedate"
+        android:layout_height="40dp"
+        android:orientation="horizontal"
+        android:layout_below="@+id/ll_duedate">
+
+        <TextView
+            android:layout_width="80dp"
+            android:layout_height="match_parent"
+            android:gravity="center|left"
+            android:text="@string/time" />
+
+        <EditText
+            android:id="@+id/et_add_time"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_unitcode"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="none"
-        />
-    <TextView
+        android:layout_height="40dp"
+        android:orientation="horizontal"
+        android:layout_below="@+id/ll_time">
+
+        <TextView
+            android:layout_width="80dp"
+            android:layout_height="match_parent"
+            android:gravity="center|left"
+            android:text="@string/unitcode" />
+
+        <Spinner
+            android:id="@+id/spn_add_unitcode"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"></Spinner>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_urgency"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/time" />
-    <EditText
-        android:id="@+id/et_add_time"
+        android:layout_height="40dp"
+        android:orientation="horizontal"
+        android:layout_below="@+id/ll_unitcode">
+
+        <TextView
+            android:layout_width="80dp"
+            android:layout_height="match_parent"
+            android:gravity="center|left"
+            android:text="@string/urgency" />
+
+        <Spinner
+            android:id="@+id/spn_add_urgency"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"></Spinner>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_important"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-    <TextView
+        android:layout_height="40dp"
+        android:orientation="horizontal"
+        android:layout_below="@+id/ll_urgency">
+
+        <TextView
+            android:layout_width="80dp"
+            android:layout_height="match_parent"
+            android:gravity="center|left"
+            android:text="@string/important" />
+
+        <Spinner
+            android:id="@+id/spn_add_important"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"></Spinner>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_weight"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/unitcode" />
-    <Spinner
+        android:layout_height="40dp"
+        android:orientation="horizontal"
+        android:layout_below="@+id/ll_important">
+
+        <TextView
+            android:layout_width="80dp"
+            android:layout_height="match_parent"
+            android:gravity="center|left"
+            android:text="@string/weight" />
+
+        <EditText
+            android:id="@+id/et_add_weight"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_notify"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/spn_add_unitcode"></Spinner>
-    <TextView
+        android:layout_height="40dp"
+        android:orientation="horizontal"
+        android:layout_below="@+id/ll_weight">
+
+        <TextView
+            android:layout_width="80dp"
+            android:layout_height="match_parent"
+            android:gravity="center|left"
+            android:text="@string/notify" />
+
+        <ToggleButton
+            android:id="@+id/tgb_add_notify"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_detail"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/urgency" />
-    <Spinner
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/spn_add_urgency"></Spinner>
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/important" />
-    <Spinner
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/spn_add_important"></Spinner>
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/weight" />
-    <EditText
-        android:id="@+id/et_add_weight"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/notify" />
-    <ToggleButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/tgb_add_notify"/>
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/detail" />
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/et_add_detail"/>
+        android:layout_height="40dp"
+        android:orientation="horizontal"
+        android:layout_below="@+id/ll_notify">
+
+        <TextView
+            android:layout_width="80dp"
+            android:layout_height="match_parent"
+            android:gravity="center|left"
+            android:text="@string/detail" />
+
+        <EditText
+            android:id="@+id/et_add_detail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
     <Button
         android:id="@+id/btn_add_confirm"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/ll_detail"
         android:onClick="AddTask"
         android:text="Confirm" />
-</LinearLayout>
+</RelativeLayout>

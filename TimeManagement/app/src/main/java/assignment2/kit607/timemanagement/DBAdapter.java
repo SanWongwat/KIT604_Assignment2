@@ -24,7 +24,7 @@ public class DBAdapter {
     }
 
     public boolean InsertTask(Task task) {
-        Log.d("DBAdapter.InsertTask", "begin insert");
+        Log.d(TAG, "begin insert");
         sdb = dbHelper.getWritableDatabase();
         long res = -1;
         ContentValues values = new ContentValues();
@@ -41,6 +41,7 @@ public class DBAdapter {
         } catch (Exception e) {
             throw e;
         }
+        Log.d(TAG,String.valueOf(res));
         if (res != -1) return true;
         else return false;
     }
