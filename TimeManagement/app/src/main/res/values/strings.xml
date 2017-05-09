@@ -15,5 +15,6 @@
     <string name="dlg_timepicker_title">Select time</string>
     <string name="ok">OK</string>
     <string name="cancel">Cancel</string>
+    <string name="main_screen_tmq">Your Time Managment Questionnaire Score:</string>
 
 </resources>
