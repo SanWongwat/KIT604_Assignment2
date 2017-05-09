@@ -1,20 +1,27 @@
 package assignment2.kit607.timemanagement;
 
+import android.app.Dialog;
+import android.app.DialogFragment;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.CalendarView;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity  implements CalendarDialogFragment.NoticeDialogListener {
 
+    private final String TAG = "MainActivity";
     List<Task> mTaskList = new ArrayList<Task>();
     TaskListAdapter mTaskListAdapter = null;
 
@@ -34,6 +41,26 @@ public class MainActivity extends AppCompatActivity {
         mTaskListAdapter = new TaskListAdapter();
         ListView taskListView = (ListView) findViewById(R.id.TaskListView);
         taskListView.setAdapter(mTaskListAdapter);
+    }
+
+    protected void AddUnitCode(View view) {
+        Intent intent = new Intent(this, AddUnitCodeActivity.class);
+        startActivity(intent);
+    }
+
+    protected void ShowDialog(View view){
+        DialogFragment df = new CalendarDialogFragment();
+        df.show(getFragmentManager(),"Calendar");
+    }
+    @Override
+    public void onCalendarDialogPositiveClick(DialogFragment dialog) {
+        Dialog d = dialog.getDialog();
+        CalendarView cv = (CalendarView)d.findViewById(R.id.dlg_calendar);
+        Log.d(TAG, new Date(cv.getDate()).toString());
+    }
+    @Override
+    public void onCalendarDialogNegativeClick(DialogFragment dialog) {
+
     }
 
     public List<Task> RetrieveTaskList() {

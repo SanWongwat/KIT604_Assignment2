@@ -24,8 +24,8 @@ public class DBAdapter {
     }
 
     public void InsertTask(Task task) {
-        Log.d("DBAdapter.InsertTask","begin insert");
-        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        Log.d("DBAdapter.InsertTask", "begin insert");
+        sdb = dbHelper.getWritableDatabase();
 
         ContentValues values = new ContentValues();
         values.put(TaskTable.COLUMN_NAME_TITLE, task.getTitle());
@@ -37,13 +37,13 @@ public class DBAdapter {
 //        values.put(TaskContract.TaskEntry.COLUMN_NAME_NOTIFY, task.is_notify());
 //        values.put(TaskContract.TaskEntry.COLUMN_NAME_DETAIL, task.getDetail());
         try {
-            db.insert(TaskTable.TABLE_NAME, null, values);
+            sdb.insert(TaskTable.TABLE_NAME, null, values);
         } catch (Exception e) {
             throw e;
         }
     }
 
-    public List<Task> GetTask(){
+    public List<Task> GetTask() {
         SQLiteDatabase db = dbHelper.getReadableDatabase();
         /*String[] projection = {
                 TaskContract.TaskEntry.COLUMN_NAME_TITLE,
@@ -59,11 +59,11 @@ public class DBAdapter {
         String sortOrder =
                 TaskContract.TaskEntry.COLUMN_NAME_TITLE + " DESC";*/
         //String query = "SELECT t.*,u.Unitname  FROM Task t INNER JOIN UnitCode u ON t.UnitCode = u.UnitId";
-        String query ="SELECT * FROM " + TaskTable.TABLE_NAME;
+        String query = "SELECT * FROM " + TaskTable.TABLE_NAME;
 
         Cursor cursor = db.rawQuery(query, null);
-        if(cursor!=null){
-            if(cursor.getCount() ==0){
+        if (cursor != null) {
+            if (cursor.getCount() == 0) {
 
                 Log.d(TAG, "Database is empty.");
             }
@@ -115,17 +115,73 @@ public class DBAdapter {
                 UnitTable.COLUMN_NAME_UNITNAME
         };
 
-        Cursor c = sdb.query(UnitTable.TABLE_NAME,projection,null,null,null,null,null);
+        Cursor c = sdb.query(UnitTable.TABLE_NAME, projection, null, null, null, null, null);
 
         return c;
 
     }
+
+    public boolean InsertUnitCode(Unit u) {
+        sdb = dbHelper.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(UnitTable.COLUMN_NAME_UNITID, u.getUnitId());
+        values.put(UnitTable.COLUMN_NAME_UNITNAME, u.getUnitName());
+        long res = -1;
+        try {
+            res = sdb.insert(UnitTable.TABLE_NAME, null, values);
+        } catch (Exception e) {
+            throw e;
+        }
+        if (res != -1) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    //update unit code
+    public boolean UpdateUnitCode(Unit u) {
+        sdb = dbHelper.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(UnitTable.COLUMN_NAME_UNITNAME, u.getUnitName());
+        String selection = UnitTable.COLUMN_NAME_UNITID +" = ?";
+        String[] SelectionArgs = {u.getUnitId()};
+        long res = -1;
+        try {
+            res = sdb.update(UnitTable.TABLE_NAME,values,selection,SelectionArgs);
+        } catch (Exception e) {
+            throw e;
+        }
+        if (res != -1) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    //delete unitcode
+    public boolean DeleteUnitCode(Unit u){
+        sdb = dbHelper.getWritableDatabase();
+        String selection = UnitTable.COLUMN_NAME_UNITID +" = ?";
+        String[] SelectionArgs = {u.getUnitId()};
+        long res = -1;
+        try {
+            res = sdb.delete(UnitTable.TABLE_NAME,selection,SelectionArgs);
+        } catch (Exception e) {
+            throw e;
+        }
+        if (res != -1) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     private class TMDbHelper extends SQLiteOpenHelper {
         public static final String TAG = "TMDbHelper";
         public static final int DATABASE_VERSION = 1;
         public static final String DATABASE_NAME = "TimeManagement.db";
         //sql statement for creating task table
-        private static final String SQL_CREATE_TASKENTRIES= "CREATE TABLE "
+        private static final String SQL_CREATE_TASKENTRIES = "CREATE TABLE "
                 + TaskTable.TABLE_NAME
                 + " (" + TaskTable.Key + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + TaskTable.COLUMN_NAME_TITLE + " STRING, "
@@ -137,7 +193,7 @@ public class DBAdapter {
                 + TaskTable.COLUMN_NAME_NOTIFY + " STRING, "
                 + TaskTable.COLUMN_NAME_DETAIL + " STRING);";
         //sql statement for creating unitcode table
-        private static final String SQL_CREATE_UNITCODEENTRIES= "CREATE TABLE "
+        private static final String SQL_CREATE_UNITCODEENTRIES = "CREATE TABLE "
                 + UnitTable.TABLE_NAME
                 + " (" + UnitTable.Key + " INTEGER PRIMARY KEY AUTOINCREMENT,"
                 + UnitTable.COLUMN_NAME_UNITID + " STRING, "
@@ -149,25 +205,28 @@ public class DBAdapter {
                 + TMQTable.COLUMN_NAME_CATEGORY + " STRING, "
                 + TMQTable.COLUMN_NAME_QUESTION + " STRING, "
                 + TMQTable.COLUMN_NAME_SCORE + " STRING);";
-        private static final String SQL_DROP_TASK = "DROP TABLE IF EXIST "+ TaskTable.TABLE_NAME +";";
-        private static final String SQL_DROP_UNITCODE = "DROP TABLE IF EXIST "+ UnitTable.TABLE_NAME +";";
-        private static final String SQL_DROP_TMQ = "DROP TABLE IF EXIST "+ TMQTable.TABLE_NAME +";";
+        private static final String SQL_DROP_TASK = "DROP TABLE IF EXIST " + TaskTable.TABLE_NAME + ";";
+        private static final String SQL_DROP_UNITCODE = "DROP TABLE IF EXIST " + UnitTable.TABLE_NAME + ";";
+        private static final String SQL_DROP_TMQ = "DROP TABLE IF EXIST " + TMQTable.TABLE_NAME + ";";
 
         public TMDbHelper(Context context) {
             super(context, DATABASE_NAME, null, DATABASE_VERSION);
         }
+
         public void onCreate(SQLiteDatabase db) {
             Log.d(TAG, "DatabaseHelper onCreate");
             db.execSQL(SQL_CREATE_TASKENTRIES);
             db.execSQL(SQL_CREATE_UNITCODEENTRIES);
             db.execSQL(SQL_CREATE_TMQENTRIES);
         }
+
         public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
             // This database is only a cache for online data, so its upgrade policy is
             // to simply to discard the data and start over
 //        db.execSQL(SQL_DELETE_ENTRIES);
 //        onCreate(db);
         }
+
         public void onDowngrade(SQLiteDatabase db, int oldVersion, int newVersion) {
             //onUpgrade(db, oldVersion, newVersion);
         }

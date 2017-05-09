@@ -9,8 +9,12 @@ import java.util.Date;
  */
 
 public class Util {
-    public static final String _dateFormat="dd/mmm/yyyy HH:mm:ss";
+    public static final String _dateTimeFormat="dd/mm/yyyy HH:mm";
+    public static final String _dateFormat="EEEE d MMM yyyy";
+    public static final String _timeFormat="hh:mm a";
     public static final String[] _low_high_array = new String[]{"Low", "High"};
+    public static final String _NewUnitcodeText = "Create new unit code.";
+    public static final String _FirstSpinerText = "--Select Unitcode--";
 
     public static Date StringToDate(String strDate)throws ParseException{
         SimpleDateFormat f = new SimpleDateFormat(_dateFormat);

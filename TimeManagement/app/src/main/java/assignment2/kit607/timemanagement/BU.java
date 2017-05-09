@@ -18,6 +18,7 @@ public class BU {
     public BU(Context ctx){
         db = new DBAdapter(ctx);
     }
+
     //get all unit.
     public List<Unit> GetUnitCode() {
         List<Unit> unitList = new ArrayList<Unit>();
@@ -35,5 +36,18 @@ public class BU {
             unitList.add(u);
         }
         return unitList;
+    }
+    //add unit code
+    public boolean AddNewUnitCode(Unit u) {
+        boolean isSuccess;
+        isSuccess = db.InsertUnitCode(u);
+        return isSuccess;
+    }
+
+    //edit unit code
+    public boolean EditUnitCode(Unit u){
+        boolean isSuccess;
+        isSuccess = db.UpdateUnitCode(u);
+        return isSuccess;
     }
 }
