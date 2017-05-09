@@ -13,8 +13,13 @@
     <string name="high">High</string>
     <string name="dlg_calendar_title">Select date</string>
     <string name="dlg_timepicker_title">Select time</string>
+    <string name="dlg_weightpicker">Select weight</string>
     <string name="ok">OK</string>
     <string name="cancel">Cancel</string>
+    <string name="add_success">Successfully create a task.</string>
+    <string name="edit_success">Successfully edit a task.</string>
+    <string name="isNotify">Y</string>
+    <string name="isNotNotify">N</string>
     <string name="main_screen_tmq">Your Time Managment Questionnaire Score:</string>
 
 </resources>

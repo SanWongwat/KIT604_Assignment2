@@ -37,17 +37,19 @@ public class BU {
         }
         return unitList;
     }
+
+    public boolean InsertTask(Task t) {
+        return db.InsertTask(t);
+    }
+
     //add unit code
     public boolean AddNewUnitCode(Unit u) {
-        boolean isSuccess;
-        isSuccess = db.InsertUnitCode(u);
-        return isSuccess;
+        return db.InsertUnitCode(u);
     }
 
     //edit unit code
     public boolean EditUnitCode(Unit u){
-        boolean isSuccess;
-        isSuccess = db.UpdateUnitCode(u);
-        return isSuccess;
+        return db.UpdateUnitCode(u);
     }
+
 }

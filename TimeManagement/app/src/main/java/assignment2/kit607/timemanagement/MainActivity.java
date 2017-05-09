@@ -29,18 +29,25 @@ public class MainActivity extends AppCompatActivity  implements CalendarDialogFr
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-    }
+        initiateMainActivity();
 
-    protected void NewTask(View view) {
-        Intent intent = new Intent(this, AddActivity.class);
-        startActivity(intent);
+    }
+    private void initiateMainActivity(){
+        Button btn_newTask = (Button)findViewById(R.id.main_activity_button_new_task);
+        btn_newTask.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, AddActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     protected void GetTask(View view) {
         mTaskList = RetrieveTaskList();
         mTaskListAdapter = new TaskListAdapter();
-        ListView taskListView = (ListView) findViewById(R.id.TaskListView);
-        taskListView.setAdapter(mTaskListAdapter);
+//        ListView taskListView = (ListView) findViewById(R.id.TaskListView);
+//        taskListView.setAdapter(mTaskListAdapter);
     }
 
     protected void AddUnitCode(View view) {

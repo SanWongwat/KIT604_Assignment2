@@ -6,58 +6,53 @@ import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.util.Log;
 import android.view.LayoutInflater;
-import android.widget.CalendarView;
 import android.widget.LinearLayout;
-
-import java.util.Date;
+import android.widget.NumberPicker;
+import android.widget.RelativeLayout;
 
 /**
- * Created by Allen on 5/8/2017.
+ * Created by Allen on 5/9/2017.
  */
 
-public class CalendarDialogFragment extends DialogFragment{
+public class WeightPickerDialogFragment extends DialogFragment {
 
     public interface NoticeDialogListener {
-        public void onCalendarDialogPositiveClick(DialogFragment dialog);
-        public void onCalendarDialogNegativeClick(DialogFragment dialog);
+        public void onWeighPickerDialogPositiveClick(DialogFragment dialog);
+
+        public void onWeighPickerDialogNegativeClick(DialogFragment dialog);
     }
+
     NoticeDialogListener mListener;
     private final String TAG = "CalendarDialogFragment";
+    private final int min = 1;
+    private final int max = 100;
 
     @Override
-    public Dialog onCreateDialog(Bundle savedInstanceState){
+    public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         LayoutInflater inflater = getActivity().getLayoutInflater();
-        LinearLayout ll = (LinearLayout)inflater.inflate(R.layout.dialog_calendar,null);
-        CalendarView cv = (CalendarView)ll.findViewById(R.id.dlg_calendar);
-        cv.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
-            @Override
-            public void onSelectedDayChange(@NonNull CalendarView view, int year,
-                                            int month, int dayOfMonth) {
-                Date selectedDate = new Date(year, month, dayOfMonth);
-                Log.d(TAG,selectedDate.toString());
-            }
-        });
-        builder.setMessage(R.string.dlg_calendar_title);
-        builder.setView(ll)
-                .setPositiveButton(R.string.ok,new DialogInterface.OnClickListener(){
+        RelativeLayout rl = (RelativeLayout) inflater.inflate(R.layout.dialog_weightpicker, null);
+        NumberPicker np = (NumberPicker)rl.findViewById(R.id.dlg_weightPicker);
+        np.setMinValue(min);
+        np.setMaxValue(max);
+        builder.setMessage(R.string.dlg_weightpicker);
+        builder.setView(rl)
+                .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
                     @Override
-                    public void onClick(DialogInterface dialog, int id){
-                        mListener.onCalendarDialogPositiveClick(CalendarDialogFragment.this);
+                    public void onClick(DialogInterface dialog, int id) {
+                        mListener.onWeighPickerDialogPositiveClick(WeightPickerDialogFragment.this);
                     }
                 })
                 .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
-                        mListener.onCalendarDialogNegativeClick(CalendarDialogFragment.this);
+                        mListener.onWeighPickerDialogNegativeClick(WeightPickerDialogFragment.this);
                     }
-                }
-                );
+                });
         return builder.create();
     }
+
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
@@ -71,5 +66,4 @@ public class CalendarDialogFragment extends DialogFragment{
                     + " must implement NoticeDialogListener");
         }
     }
-
 }

@@ -12,8 +12,11 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.CalendarView;
 import android.widget.EditText;
+import android.widget.NumberPicker;
 import android.widget.Spinner;
 import android.widget.TimePicker;
+import android.widget.Toast;
+import android.widget.ToggleButton;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -27,7 +30,8 @@ import java.util.List;
 
 public class AddActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener,
         CalendarDialogFragment.NoticeDialogListener,
-        TimeDialogFragment.NoticeDialogListener {
+        TimeDialogFragment.NoticeDialogListener,
+        WeightPickerDialogFragment.NoticeDialogListener {
 
     private String TAG = "AddActivity";
     private BU bu = new BU(this);
@@ -41,9 +45,9 @@ public class AddActivity extends AppCompatActivity implements AdapterView.OnItem
     }
 
     @Override
-    public void onCalendarDialogPositiveClick(DialogFragment dialog) {
-        Dialog d = dialog.getDialog();
-        CalendarView cv = (CalendarView) d.findViewById(R.id.dlg_calendar);
+    public void onCalendarDialogPositiveClick(DialogFragment dialogFragment) {
+        Dialog dialog = dialogFragment.getDialog();
+        CalendarView cv = (CalendarView) dialog.findViewById(R.id.dlg_calendar);
         Date selectedDate = new Date(cv.getDate());
         DateFormat df = new SimpleDateFormat(Util._dateFormat);
         String dateStr = df.format(selectedDate);
@@ -57,9 +61,9 @@ public class AddActivity extends AppCompatActivity implements AdapterView.OnItem
     }
 
     @Override
-    public void onTimeDialogPositiveClick(DialogFragment dialog) {
-        Dialog d = dialog.getDialog();
-        TimePicker tp = (TimePicker) d.findViewById(R.id.dlg_timepicker);
+    public void onTimeDialogPositiveClick(DialogFragment dialogFragment) {
+        Dialog dialog = dialogFragment.getDialog();
+        TimePicker tp = (TimePicker) dialog.findViewById(R.id.dlg_timepicker);
         Calendar cal = Calendar.getInstance();
         cal.set(Calendar.HOUR_OF_DAY, tp.getCurrentHour());
         cal.set(Calendar.MINUTE, tp.getCurrentMinute());
@@ -75,6 +79,21 @@ public class AddActivity extends AppCompatActivity implements AdapterView.OnItem
 
     }
 
+    @Override
+    public void onWeighPickerDialogPositiveClick(DialogFragment dialogFragment) {
+        Dialog dialog = dialogFragment.getDialog();
+        NumberPicker np = (NumberPicker) dialog.findViewById(R.id.dlg_weightPicker);
+        int val = np.getValue();
+        EditText et_weight = (EditText) findViewById(R.id.et_add_weight);
+        et_weight.setText(String.valueOf(val));
+    }
+
+    @Override
+    public void onWeighPickerDialogNegativeClick(DialogFragment dialog) {
+
+    }
+
+    //initialise page
     public void InitialiseAddPageUI() {
 
         EditText et_duedate = (EditText) findViewById(R.id.et_add_duedate);
@@ -113,21 +132,36 @@ public class AddActivity extends AppCompatActivity implements AdapterView.OnItem
                 df.show(getFragmentManager(), "TimePicker");
             }
         });
+        EditText et_weight = (EditText) findViewById(R.id.et_add_weight);
+        et_weight.setKeyListener(null);
+        et_weight.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean hasFocus) {
+                if (hasFocus) {
+                    DialogFragment df = new WeightPickerDialogFragment();
+                    df.show(getFragmentManager(), "WeightPicker");
+                }
+            }
+        });
+        et_weight.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DialogFragment df = new WeightPickerDialogFragment();
+                df.show(getFragmentManager(), "WeightPicker");
+            }
+        });
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,
                 R.layout.support_simple_spinner_dropdown_item, Util._low_high_array);
         dataAdapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
 
-        Log.d(TAG, "init urgency");
         Spinner spn_urgency = (Spinner) findViewById(R.id.spn_add_urgency);
         spn_urgency.setAdapter(dataAdapter);
         spn_urgency.setOnItemSelectedListener(this);
 
-        Log.d(TAG, "init important");
         Spinner spn_important = (Spinner) findViewById(R.id.spn_add_important);
         spn_important.setAdapter(dataAdapter);
         spn_important.setOnItemSelectedListener(this);
 
-        Log.d(TAG, "init unit");
         List<Unit> unitList = bu.GetUnitCode();
         int arrSize = unitList.size() + 2;
         String[] unitNameArr = new String[arrSize];
@@ -147,28 +181,45 @@ public class AddActivity extends AppCompatActivity implements AdapterView.OnItem
         spn_unit.setOnItemSelectedListener(this);
     }
 
+    //add task
     public void AddTask(View view) {
-        EditText title = (EditText) findViewById(R.id.et_add_title);
         Task t = new Task();
-        t.setTitle(title.getText().toString());
+
+        t.setTitle(((EditText) findViewById(R.id.et_add_title)).getText().toString());
+
         EditText duedate = (EditText) findViewById(R.id.et_add_duedate);
         EditText time = (EditText) findViewById(R.id.et_add_time);
         String datetime = duedate.getText() + " " + time.getText();
         t.setDuedate(datetime);
+
         String[] unitArr = ((Spinner) findViewById(R.id.spn_add_unitcode))
                 .getSelectedItem().toString().split(":");
         Unit u = new Unit();
         u.setUnitId(unitArr[0].trim());
         u.setUnitName(unitArr[1].trim());
         t.set_unitCode(u);
+
         t.setUrgency(((Spinner) findViewById(R.id.spn_add_urgency))
                 .getSelectedItem().toString());
+
         t.setImportant(((Spinner) findViewById(R.id.spn_add_important))
                 .getSelectedItem().toString());
+
+        t.setWeight(((EditText) findViewById(R.id.et_add_weight)).getText().toString());
+
+        String notify = getString(R.string.isNotNotify);
+        ToggleButton tgb_notify = (ToggleButton)findViewById(R.id.tgb_add_notify);
+        if(tgb_notify.isChecked())notify = getString(R.string.isNotify);
+        t.setNotify(notify);
+
+        t.setDetail(((EditText) findViewById(R.id.et_add_detail)).getText().toString());
         Log.d("AddTaskView", "Begin add");
 
-        DBAdapter db = new DBAdapter(this);
-        db.InsertTask(t);
+        boolean isSuccess = bu.InsertTask(t);
+        Toast toast;
+        if(isSuccess){
+            toast = Toast.makeText(this,R.string.add_success,Toast.LENGTH_SHORT);
+        }
 
     }
 

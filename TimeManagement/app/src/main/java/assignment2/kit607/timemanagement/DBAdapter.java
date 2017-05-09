@@ -23,41 +23,31 @@ public class DBAdapter {
         dbHelper = new TMDbHelper(mctx);
     }
 
-    public void InsertTask(Task task) {
+    public boolean InsertTask(Task task) {
         Log.d("DBAdapter.InsertTask", "begin insert");
         sdb = dbHelper.getWritableDatabase();
-
+        long res = -1;
         ContentValues values = new ContentValues();
         values.put(TaskTable.COLUMN_NAME_TITLE, task.getTitle());
-//        values.put(TaskContract.TaskEntry.COLUMN_NAME_DUEDATE, task.getDuedate().getTime());
-//        values.put(TaskContract.TaskEntry.COLUMN_NAME_UNITCODE, task.get_unitCode().get_unitCode());
-//        values.put(TaskContract.TaskEntry.COLUMN_NAME_URGENCY, task.getUrgency());
-//        values.put(TaskContract.TaskEntry.COLUMN_NAME_IMPORTANT, task.getImportant());
-//        values.put(TaskContract.TaskEntry.COLUMN_NAME_WEIGHT, task.getWeight());
-//        values.put(TaskContract.TaskEntry.COLUMN_NAME_NOTIFY, task.is_notify());
-//        values.put(TaskContract.TaskEntry.COLUMN_NAME_DETAIL, task.getDetail());
+        values.put(TaskTable.COLUMN_NAME_DUEDATE, task.getDuedate());
+        values.put(TaskTable.COLUMN_NAME_UNITCODE, task.get_unitCode().getUnitId());
+        values.put(TaskTable.COLUMN_NAME_URGENCY, task.getUrgency());
+        values.put(TaskTable.COLUMN_NAME_IMPORTANT, task.getImportant());
+        values.put(TaskTable.COLUMN_NAME_WEIGHT, task.getWeight());
+        values.put(TaskTable.COLUMN_NAME_NOTIFY, task.is_notify());
+        values.put(TaskTable.COLUMN_NAME_DETAIL, task.getDetail());
         try {
-            sdb.insert(TaskTable.TABLE_NAME, null, values);
+            res = sdb.insert(TaskTable.TABLE_NAME, null, values);
         } catch (Exception e) {
             throw e;
         }
+        if (res != -1) return true;
+        else return false;
     }
 
     public List<Task> GetTask() {
         SQLiteDatabase db = dbHelper.getReadableDatabase();
-        /*String[] projection = {
-                TaskContract.TaskEntry.COLUMN_NAME_TITLE,
-                TaskContract.TaskEntry.COLUMN_NAME_DUEDATE,
-                TaskContract.TaskEntry.COLUMN_NAME_UNITCODE,
-                TaskContract.TaskEntry.COLUMN_NAME_URGENCY,
-                TaskContract.TaskEntry.COLUMN_NAME_IMPORTANT,
-                TaskContract.TaskEntry.COLUMN_NAME_WEIGHT,
-                TaskContract.TaskEntry.COLUMN_NAME_NOTIFY,
-                TaskContract.TaskEntry.COLUMN_NAME_DETAIL
 
-        };
-        String sortOrder =
-                TaskContract.TaskEntry.COLUMN_NAME_TITLE + " DESC";*/
         //String query = "SELECT t.*,u.Unitname  FROM Task t INNER JOIN UnitCode u ON t.UnitCode = u.UnitId";
         String query = "SELECT * FROM " + TaskTable.TABLE_NAME;
 
@@ -138,16 +128,17 @@ public class DBAdapter {
             return false;
         }
     }
+
     //update unit code
     public boolean UpdateUnitCode(Unit u) {
         sdb = dbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(UnitTable.COLUMN_NAME_UNITNAME, u.getUnitName());
-        String selection = UnitTable.COLUMN_NAME_UNITID +" = ?";
+        String selection = UnitTable.COLUMN_NAME_UNITID + " = ?";
         String[] SelectionArgs = {u.getUnitId()};
         long res = -1;
         try {
-            res = sdb.update(UnitTable.TABLE_NAME,values,selection,SelectionArgs);
+            res = sdb.update(UnitTable.TABLE_NAME, values, selection, SelectionArgs);
         } catch (Exception e) {
             throw e;
         }
@@ -159,13 +150,13 @@ public class DBAdapter {
     }
 
     //delete unitcode
-    public boolean DeleteUnitCode(Unit u){
+    public boolean DeleteUnitCode(Unit u) {
         sdb = dbHelper.getWritableDatabase();
-        String selection = UnitTable.COLUMN_NAME_UNITID +" = ?";
+        String selection = UnitTable.COLUMN_NAME_UNITID + " = ?";
         String[] SelectionArgs = {u.getUnitId()};
         long res = -1;
         try {
-            res = sdb.delete(UnitTable.TABLE_NAME,selection,SelectionArgs);
+            res = sdb.delete(UnitTable.TABLE_NAME, selection, SelectionArgs);
         } catch (Exception e) {
             throw e;
         }
