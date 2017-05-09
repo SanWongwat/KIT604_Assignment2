@@ -1,25 +1,134 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="assignment2.kit607.timemanagement.MainActivity">
+    android:background="@color/grey"
+    tools:context="assignment2.kit607.timemanagement.MainActivity"
+    android:weightSum="1">
+
+   <TextView
+       android:id="@+id/MainActivity_title"
+       android:layout_width="match_parent"
+       android:layout_height="50dp"
+       android:text="Upcoming Task"
+       android:textColor="@color/black"
+       android:background="@color/red"
+       android:textAllCaps="true"
+       android:gravity="center"
+       android:layout_marginBottom="2dp"
+       />
+
+
 
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!" />
+        android:id="@+id/top_1_task"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/main_scree_task_height"
+        android:layout_marginBottom="2dp"
+        android:height="@dimen/main_scree_task_height"
+        android:background="@color/white"
+        android:text="@string/task_title"
+        android:textColor="@color/black" />
 
-    <Button
-        android:text="New Task"
-        android:layout_width="wrap_content"
+
+        />
+    <TextView
+        android:id="@+id/top_2_task"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/main_scree_task_height"
+        android:text="@string/task_title"
+        android:textColor="@color/black"
+        android:height="@dimen/main_scree_task_height"
+        android:background="@color/white"
+        android:layout_marginBottom="2dp"
+        />
+
+
+       />
+    <TextView
+        android:id="@+id/top_3_task"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/main_scree_task_height"
+        android:text="@string/task_title"
+        android:textColor="@color/black"
+        android:height="@dimen/main_scree_task_height"
+        android:background="@color/white"
+        android:layout_marginBottom="2dp"
+       />
+
+        />
+    <TextView
+        android:id="@+id/top_4_task"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/main_scree_task_height"
+        android:text="@string/task_title"
+        android:textColor="@color/black"
+        android:height="@dimen/main_scree_task_height"
+        android:background="@color/white"
+        android:layout_marginBottom="2dp"
+       />
+
+
+    <TextView
+        android:id="@+id/top_5_task"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/main_scree_task_height"
+        android:text="@string/task_title"
+        android:textColor="@color/black"
+        android:height="@dimen/main_scree_task_height"
+        android:background="@color/white"
+        android:layout_marginBottom="2dp"
+        />
+        <TextView
+            android:id="@+id/TMQ_score"
+            android:layout_width="match_parent"
+            android:layout_height="59dp"
+            android:background="@color/light_green"
+            android:gravity="center_horizontal"
+            android:text="@string/main_screen_tmq"
+            android:textColor="@color/black"
+            android:paddingTop="10dp" />
+    <RelativeLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/newTaskButton"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:id="@+id/main_activity_relative_layout">
+        <Button
+            android:layout_width="@dimen/main_screen_button_width"
+            android:layout_height="@dimen/main_screen_button_height"
+            android:layout_marginLeft="@dimen/main_screen_button_margin_left"
+            android:layout_marginTop="@dimen/main_screen_button_margin_top"
+            android:id="@+id/main_activity_button_new_task"
+            android:text="New Task"
+            />
+        <Button
+            android:layout_width="@dimen/main_screen_button_width"
+            android:layout_height="@dimen/main_screen_button_height"
+            android:id="@+id/main_activity_button_view_task"
+            android:layout_marginLeft="@dimen/main_screen_button_margin_left"
+            android:layout_marginTop="@dimen/main_screen_button_margin_top"
+            android:text="View Task"
+            android:layout_toRightOf="@+id/main_activity_button_new_task"
+            />
+        <Button
+            android:layout_width="@dimen/main_screen_button_width"
+            android:layout_height="@dimen/main_screen_button_height"
+            android:layout_marginLeft="@dimen/main_screen_button_margin_left"
+            android:id="@+id/main_activity_button_TMQ"
+            android:text="TMQ"
+            android:layout_below="@+id/main_activity_button_new_task"
+            />
+        <Button
+            android:layout_width="@dimen/main_screen_button_width"
+            android:layout_height="@dimen/main_screen_button_height"
+            android:id="@+id/main_activity_button_setting"
+            android:layout_marginLeft="@dimen/main_screen_button_margin_left"
+            android:text="Setting"
+            android:layout_below="@+id/main_activity_button_view_task"
+            android:layout_toRightOf="@+id/main_activity_button_TMQ"
+            />
+    </RelativeLayout>
+
 </LinearLayout>

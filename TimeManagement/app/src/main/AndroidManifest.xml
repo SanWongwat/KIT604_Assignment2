@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="assignment2.kit607.timemanagement">
+    package="assignment2.kit607.timemanagement"
+
+    >
+    <uses-sdk android:minSdkVersion="11"></uses-sdk>
+
 
     <application
         android:allowBackup="true"
@@ -15,6 +19,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".AddActivity"></activity>
+        <activity android:name=".EditActivity" />
+        <activity android:name=".TMQActivity" />
+        <activity android:name=".calendarActivity"></activity>
+
     </application>
 
 </manifest>

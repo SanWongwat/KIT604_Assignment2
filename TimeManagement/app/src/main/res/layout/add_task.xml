@@ -1,6 +1,275 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:background="@color/white"
+    android:layout_height="match_parent"
+    android:weightSum="1">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/add_task_title"
+            android:text="@string/add_task_title"
+            android:textColor="@color/black"
+            android:layout_marginLeft="@dimen/add_task_left_margin"
+            android:layout_marginTop="@dimen/add_task_top_margin"
+            android:textSize="20sp"
+            />
+
+        <EditText
+            android:id="@+id/add_task_edit_title"
+            android:layout_width="300dp"
+            android:layout_height="40dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="10dp"
+            android:maxLength="30"
+            android:maxLines="1"
+            android:theme="@style/small_editText" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/add_task_due_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/add_task_left_margin"
+            android:layout_marginTop="@dimen/add_task_top_margin"
+            android:text="@string/add_task_due_date"
+            android:textColor="@color/black"
+            android:textSize="20sp" />
+
+        <EditText
+            android:id="@+id/add_task_edit_due_date"
+            android:layout_width="220dp"
+            android:layout_height="40dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="10dp"
+            android:hint="DD/MM/YYYY"
+            android:maxLength="30"
+            android:maxLines="1"
+            android:textColorHint="@color/grey"
+            android:theme="@style/small_editText"
+            android:textColor="@color/black"/>
+
+        <ImageButton
+            android:id="@+id/add_task_image_button"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp"
+            android:background="@color/white"
+            android:elevation="21dp"
+            android:scaleType="fitXY"
+            android:src="@mipmap/calendar_icon" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="1">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/add_task_time"
+            android:text="@string/add_task_time"
+            android:textColor="@color/black"
+            android:layout_marginLeft="@dimen/add_task_left_margin"
+            android:layout_marginTop="@dimen/add_task_top_margin"
+            android:textSize="20sp"
+            />
+
+
+        <Spinner
+            android:layout_width="80dp"
+            android:layout_height="30dp"
+            android:id="@+id/add_task_spinner_time"
+            style="@style/dropList_style"
+            android:layout_centerInParent="true"
+            android:layout_margin="10dp"
+            />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/add_task_left_margin"
+            android:layout_marginTop="@dimen/add_task_top_margin"
+            android:text="Unit Code:"
+            android:textColor="@color/black"
+            android:textSize="20sp" />
+
+        <Spinner
+            android:id="@+id/add_task_unit_code"
+            style="@style/dropList_style"
+            android:layout_width="260dp"
+            android:layout_height="30dp"
+            android:layout_margin="10dp"></Spinner>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Urgency"
+            android:textColor="@color/black"
+            android:layout_marginLeft="@dimen/add_task_left_margin"
+            android:layout_marginTop="@dimen/add_task_top_margin"
+            android:textSize="20sp"
+            />
+
+        <Spinner
+            android:layout_width="260dp"
+            android:layout_height="30dp"
+            android:id="@+id/add_task_urgency"
+            style="@style/dropList_style"
+            android:layout_margin="10dp"></Spinner>
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Importance"
+            android:textColor="@color/black"
+            android:layout_marginLeft="@dimen/add_task_left_margin"
+            android:layout_marginTop="@dimen/add_task_top_margin"
+            android:textSize="20sp"
+            />
+
+        <Spinner
+            android:layout_width="260dp"
+            android:layout_height="30dp"
+            android:id="@+id/add_task_importance"
+            style="@style/dropList_style"
+            android:layout_margin="10dp"></Spinner>
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Weight:"
+            android:textColor="@color/black"
+            android:layout_marginLeft="@dimen/add_task_left_margin"
+            android:layout_marginTop="@dimen/add_task_top_margin"
+            android:textSize="20sp"
+            />
+
+        <Spinner
+            android:layout_width="260dp"
+            android:layout_height="30dp"
+            android:id="@+id/add_task_weight"
+            style="@style/dropList_style"
+            android:layout_margin="10dp"></Spinner>
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/add_task_notify"
+            android:text="Notify:"
+            android:textColor="@color/black"
+            android:layout_marginLeft="@dimen/add_task_left_margin"
+            android:layout_marginTop="@dimen/add_task_top_margin"
+            android:textSize="20sp"
+            />
+        <ToggleButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/add_task_toggle"/>
+
+
+
+    </LinearLayout>
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.02"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/add_task_Detail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/add_task_left_margin"
+            android:layout_marginTop="@dimen/add_task_top_margin"
+            android:text="Detail:"
+            android:textColor="@color/black"
+            android:textSize="20sp" />
+
+        <EditText
+            android:id="@+id/add_task_edittext"
+            android:layout_width="250dp"
+            android:layout_height="80dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/edittext_normal"
+            android:gravity="top"
+            android:maxLines="3"
+            android:textColor="@color/black"
+            android:textSize="15sp" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/add_task_cancel"
+        android:text="Cancel"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/add_task_confirm"
+            android:text="Confirm"/>
+
+    </LinearLayout>
+
 
 </LinearLayout>
