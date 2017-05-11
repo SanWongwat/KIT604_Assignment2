@@ -5,7 +5,6 @@ import android.app.DialogFragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.text.format.Time;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -180,16 +179,16 @@ public class AddActivity extends AppCompatActivity implements AdapterView.OnItem
 
         t.setTitle(((EditText) findViewById(R.id.et_add_title)).getText().toString());
 
-        EditText duedate = (EditText) findViewById(R.id.et_add_duedate);
-        EditText time = (EditText) findViewById(R.id.et_add_time);
-        String datetime = duedate.getText() + " " + time.getText();
-        t.setDuedate(datetime);
+        t.setDuedate(((EditText) findViewById(R.id.et_add_duedate)).getText().toString());
 
-        String[] unitArr = ((Spinner) findViewById(R.id.spn_add_unitcode))
-                .getSelectedItem().toString().split(":");
+        t.setTime(((EditText) findViewById(R.id.et_add_time)).getText().toString());
+
+        StringWithTag uSWT = (StringWithTag) ((Spinner) findViewById(R.id.spn_add_unitcode))
+                .getSelectedItem();
+        String uKey  = uSWT.getTag().toString();
         Unit u = new Unit();
-        u.setUnitId(unitArr[0].trim());
-        u.setUnitName(unitArr[1].trim());
+        Log.d(TAG,uKey);
+        u.setKey(Integer.parseInt(uKey));
         t.set_unitCode(u);
 
         t.setUrgency(((Spinner) findViewById(R.id.spn_add_urgency))
@@ -200,12 +199,14 @@ public class AddActivity extends AppCompatActivity implements AdapterView.OnItem
 
         t.setWeight(((EditText) findViewById(R.id.et_add_weight)).getText().toString());
 
-        String notify = getString(R.string.isNotNotify);
+        String notify = getString(R.string.no);
         ToggleButton tgb_notify = (ToggleButton) findViewById(R.id.tgb_add_notify);
-        if (tgb_notify.isChecked()) notify = getString(R.string.isNotify);
+        if (tgb_notify.isChecked()) notify = getString(R.string.yes);
         t.setNotify(notify);
 
         t.setDetail(((EditText) findViewById(R.id.et_add_detail)).getText().toString());
+
+        t.setCompletion(getString(R.string.no));
         Log.d("AddTaskView", "Begin add");
 
         Toast toast;
@@ -220,16 +221,14 @@ public class AddActivity extends AppCompatActivity implements AdapterView.OnItem
     private void setUnitCodeSpinner() {
         List<Unit> unitList = bu.GetUnitCode();
         int arrSize = unitList.size() + 2;
-        String[] unitNameArr = new String[arrSize];
-        unitNameArr[0] = Util._FirstSpinerText;
-        unitNameArr[unitNameArr.length - 1] = Util._NewUnitcodeText;
+        StringWithTag[] unitNameArr = new StringWithTag[arrSize];
+        unitNameArr[0] = new StringWithTag(Util._FirstSpinerText,"");
+        unitNameArr[unitNameArr.length - 1] = new StringWithTag(Util._NewUnitcodeText,"");
         for (int i = 1; i < arrSize - 1; i++) {
-            Log.d(TAG, i + "");
             Unit u = unitList.get(i - 1);
-            unitNameArr[i] = u.getUnitId() + ": " + u.getUnitName();
-            Log.d(TAG, unitNameArr[i]);
+            unitNameArr[i] =new StringWithTag( u.getUnitId() + ": " + u.getUnitName(),u.getKey());
         }
-        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,
+        ArrayAdapter<StringWithTag> dataAdapter = new ArrayAdapter<StringWithTag>(this,
                 R.layout.support_simple_spinner_dropdown_item, unitNameArr);
         dataAdapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
         Spinner spn_unit = (Spinner) findViewById(R.id.spn_add_unitcode);
@@ -240,8 +239,6 @@ public class AddActivity extends AppCompatActivity implements AdapterView.OnItem
 
     public void onItemSelected(AdapterView<?> parent, View selectedItemView, int position,
                                long id) {
-        Log.d(TAG, parent.getItemAtPosition(position).toString());
-        Log.d(TAG, R.id.spn_add_unitcode + "");
         if (parent.getItemAtPosition(position).toString().equals(Util._NewUnitcodeText)) {
             Spinner s = (Spinner) findViewById(R.id.spn_add_unitcode);
             if (s.getAdapter().getCount() - 1 == position) {

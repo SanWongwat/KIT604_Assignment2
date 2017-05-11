@@ -18,8 +18,17 @@
     <string name="cancel">Cancel</string>
     <string name="add_success">Successfully create a task.</string>
     <string name="edit_success">Successfully edit a task.</string>
-    <string name="isNotify">Y</string>
-    <string name="isNotNotify">N</string>
+    <string name="yes">Y</string>
+    <string name="no">N</string>
+    <string name="complete">Completed</string>
+    <string name="incomplete">Incomplete</string>
+    <string name="confirm_complete_title">Mark completed confirmation</string>
+    <string name="confirm_complete_message">Do you want to mark the task as completed?</string>
+    <string name="confirm_delete_task_title">Delete task confirmation</string>
+    <string name="confirm_delete_task_message">Do you want to delete the task?</string>
+    <string name="confirm_delete_unitcode_title">Delete unitcode confirmation</string>
+    <string name="confirm_delete_unitcode_message">Do you want to delete the unitcode?</string>
     <string name="main_screen_tmq">Your Time Managment Questionnaire Score:</string>
+    <string name="toolbar_edit">Edit</string>
 
 </resources>

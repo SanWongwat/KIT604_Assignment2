@@ -2,6 +2,7 @@ package assignment2.kit607.timemanagement;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.res.Resources;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -30,18 +31,19 @@ public class DBAdapter {
         ContentValues values = new ContentValues();
         values.put(TaskTable.COLUMN_NAME_TITLE, task.getTitle());
         values.put(TaskTable.COLUMN_NAME_DUEDATE, task.getDuedate());
-        values.put(TaskTable.COLUMN_NAME_UNITCODE, task.get_unitCode().getUnitId());
+        values.put(TaskTable.COLUMN_NAME_TIME, task.getTime());
+        values.put(TaskTable.COLUMN_NAME_UNITCODE, task.get_unitCode().getKey());
         values.put(TaskTable.COLUMN_NAME_URGENCY, task.getUrgency());
         values.put(TaskTable.COLUMN_NAME_IMPORTANT, task.getImportant());
         values.put(TaskTable.COLUMN_NAME_WEIGHT, task.getWeight());
-        values.put(TaskTable.COLUMN_NAME_NOTIFY, task.is_notify());
+        values.put(TaskTable.COLUMN_NAME_NOTIFY, task.isNotify());
         values.put(TaskTable.COLUMN_NAME_DETAIL, task.getDetail());
+        values.put(TaskTable.COLUMN_NAME_COMPLETE, task.getCompletion());
         try {
             res = sdb.insert(TaskTable.TABLE_NAME, null, values);
         } catch (Exception e) {
             throw e;
         }
-        Log.d(TAG,String.valueOf(res));
         if (res != -1) return true;
         else return false;
     }
@@ -66,7 +68,6 @@ public class DBAdapter {
             int index;
             index = cursor.getColumnIndex(TaskTable.COLUMN_NAME_TITLE);
             task.setTitle(cursor.getString(index));
-            Log.d(TAG, cursor.getString(index));
 //            index = cursor.getColumnIndex(TaskTable.COLUMN_NAME_DUEDATE);
 //            task.setDuedate(cursor.getString(index));
 //            index = cursor.getColumnIndex(TaskTable.COLUMN_NAME_UNITCODE);
@@ -92,6 +93,20 @@ public class DBAdapter {
         return taskList;
     }
 
+    public Cursor GetBriefTaskInfo() {
+        sdb = dbHelper.getReadableDatabase();
+        String[] projection = {
+                TaskTable.KEY,
+                TaskTable.COLUMN_NAME_TITLE,
+                TaskTable.COLUMN_NAME_DUEDATE,
+                TaskTable.COLUMN_NAME_TIME,
+                TaskTable.COLUMN_NAME_COMPLETE
+        };
+        return sdb.query(TaskTable.TABLE_NAME, projection, null, null, null, null, null);
+
+
+    }
+
     public ArrayList<Task> GetTask(String key) {
         ArrayList<Task> taskList = new ArrayList<Task>();
 
@@ -101,15 +116,20 @@ public class DBAdapter {
 
     public Cursor RetrieveUnitCode() {
         sdb = dbHelper.getReadableDatabase();
-        String[] projection = {
-                UnitTable.COLUMN_NAME_UNITID,
-                UnitTable.COLUMN_NAME_UNITNAME
-        };
 
-        Cursor c = sdb.query(UnitTable.TABLE_NAME, projection, null, null, null, null, null);
+        Cursor c = sdb.query(UnitTable.TABLE_NAME, null, null, null, null, null, null);
 
         return c;
 
+    }
+
+    public Cursor RetrieveUnitCode(String key) {
+        sdb = dbHelper.getReadableDatabase();
+
+        String selection = UnitTable.KEY + " = ?";
+        String[] selectionArgs = {key};
+        Cursor c = sdb.query(UnitTable.TABLE_NAME, null, selection, selectionArgs, null, null, null);
+        return c;
     }
 
     public boolean InsertUnitCode(Unit u) {
@@ -168,6 +188,34 @@ public class DBAdapter {
         }
     }
 
+    public boolean CompleteTask(Task t) {
+        sdb = dbHelper.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(TaskTable.COLUMN_NAME_COMPLETE, Resources.getSystem().getString(R.string.yes));
+        String selection = TaskTable.KEY + " = ?";
+        String[] SelectionArgs = {String.valueOf(t.getKey())};
+        long res = -1;
+        try {
+            res = sdb.update(TaskTable.TABLE_NAME, values, selection, SelectionArgs);
+        } catch (Exception e) {
+            throw e;
+        }
+        if (res != -1) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public Cursor GetTaskDetail(int key) {
+        sdb = dbHelper.getReadableDatabase();
+        String selection = TaskTable.KEY + " = ?";
+        String[] selectionArgs = {String.valueOf(key)};
+        Cursor c = sdb.query(TaskTable.TABLE_NAME, null, selection, selectionArgs, null, null, null);
+        return c;
+    }
+
+
     private class TMDbHelper extends SQLiteOpenHelper {
         public static final String TAG = "TMDbHelper";
         public static final int DATABASE_VERSION = 1;
@@ -175,19 +223,21 @@ public class DBAdapter {
         //sql statement for creating task table
         private static final String SQL_CREATE_TASKENTRIES = "CREATE TABLE "
                 + TaskTable.TABLE_NAME
-                + " (" + TaskTable.Key + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+                + " (" + TaskTable.KEY + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + TaskTable.COLUMN_NAME_TITLE + " STRING, "
                 + TaskTable.COLUMN_NAME_DUEDATE + " STRING, "
                 + TaskTable.COLUMN_NAME_UNITCODE + " STRING, "
+                + TaskTable.COLUMN_NAME_TIME + " STRING, "
                 + TaskTable.COLUMN_NAME_URGENCY + " STRING, "
                 + TaskTable.COLUMN_NAME_IMPORTANT + " STRING, "
                 + TaskTable.COLUMN_NAME_WEIGHT + " STRING, "
                 + TaskTable.COLUMN_NAME_NOTIFY + " STRING, "
+                + TaskTable.COLUMN_NAME_COMPLETE + " STRING, "
                 + TaskTable.COLUMN_NAME_DETAIL + " STRING);";
         //sql statement for creating unitcode table
         private static final String SQL_CREATE_UNITCODEENTRIES = "CREATE TABLE "
                 + UnitTable.TABLE_NAME
-                + " (" + UnitTable.Key + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+                + " (" + UnitTable.KEY + " INTEGER PRIMARY KEY AUTOINCREMENT,"
                 + UnitTable.COLUMN_NAME_UNITID + " STRING, "
                 + UnitTable.COLUMN_NAME_UNITNAME + " STRING);";
 

@@ -8,22 +8,23 @@ import android.provider.BaseColumns;
 
 class TaskTable {
     public static final String TABLE_NAME = "Task";
-    public static final String Key = "_id";
+    public static final String KEY = "_id";
     public static final String COLUMN_NAME_TITLE = "Title";
     public static final String COLUMN_NAME_DUEDATE = "Duedate";
+    public static final String COLUMN_NAME_TIME = "Time";
     public static final String COLUMN_NAME_UNITCODE = "UnitCode";
     public static final String COLUMN_NAME_URGENCY = "Urgency";
     public static final String COLUMN_NAME_IMPORTANT = "Important";
     public static final String COLUMN_NAME_WEIGHT = "Weight";
     public static final String COLUMN_NAME_NOTIFY = "Notify";
     public static final String COLUMN_NAME_DETAIL = "Detail";
-    public static final String COLUMN_NAME_TMQSCORE = "TMQ_Score";
+    public static final String COLUMN_NAME_COMPLETE = "Complete";
 
 }
 
 class UnitTable {
     public static final String TABLE_NAME = "UnitCode";
-    public static final String Key = "_id";
+    public static final String KEY = "_id";
     public static final String COLUMN_NAME_UNITID = "UnitId";
     public static final String COLUMN_NAME_UNITNAME = "Unitname";
 }

@@ -21,6 +21,12 @@
         <activity android:name=".AddUnitCodeActivity"
             android:label="Add New Unitcode">
         </activity>
+        <activity android:name=".ViewAllTaskActivity"
+            android:label="Tasks">
+        </activity>
+        <activity android:name=".ViewTaskDetailActivity"
+            android:label="Task Detail">
+        </activity>
     </application>
 
 </manifest>

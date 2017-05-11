@@ -12,7 +12,6 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CalendarView;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -38,6 +37,14 @@ public class MainActivity extends AppCompatActivity  implements CalendarDialogFr
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(MainActivity.this, AddActivity.class);
+                startActivity(intent);
+            }
+        });
+        Button btn_viewAllTask = (Button)findViewById(R.id.main_activity_button_view_task);
+        btn_viewAllTask.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, ViewAllTaskActivity.class);
                 startActivity(intent);
             }
         });
@@ -87,8 +94,8 @@ public class MainActivity extends AppCompatActivity  implements CalendarDialogFr
             LayoutInflater inflater = getLayoutInflater();
             row = inflater.inflate(R.layout.task_listrow, null);
             Task t = mTaskList.get(position);
-            TextView title = (TextView) row.findViewById(R.id.taskTitle);
-            TextView duedate = (TextView) row.findViewById(R.id.taskDuedate);
+            TextView title = (TextView) row.findViewById(R.id.tv_viewrow_title);
+            TextView duedate = (TextView) row.findViewById(R.id.tv_viewrow_duedate);
             title.setText(t.getTitle());
             duedate.setText(t.getDuedate());
 

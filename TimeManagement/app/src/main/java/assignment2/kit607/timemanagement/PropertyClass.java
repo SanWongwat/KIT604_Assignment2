@@ -5,7 +5,7 @@ package assignment2.kit607.timemanagement;
  */
 
 class Task {
-    private int TaskId;
+    private int Key;
     private String Title;
     private String Duedate;
     private String Time;
@@ -15,15 +15,17 @@ class Task {
     private String Weight;
     private String Notify;
     private String Detail;
-    private DBAdapter db;
-    public Task(){}
+    private String Completion;
 
-    public int getTaskId() {
-        return TaskId;
+    public Task() {
     }
 
-    public void setTaskId(int taskId) {
-        this.TaskId = taskId;
+    public int getKey() {
+        return Key;
+    }
+
+    public void setKey(int key) {
+        this.Key = key;
     }
 
     public String getTitle() {
@@ -34,7 +36,9 @@ class Task {
         this.Title = title;
     }
 
-    public String getDuedate() { return Duedate; }
+    public String getDuedate() {
+        return Duedate;
+    }
 
     public void setDuedate(String duedate) {
         this.Duedate = duedate;
@@ -72,7 +76,7 @@ class Task {
         this.Weight = weight;
     }
 
-    public String is_notify() {
+    public String isNotify() {
         return Notify;
     }
 
@@ -95,13 +99,29 @@ class Task {
     public void setUrgency(String urgency) {
         this.Urgency = urgency;
     }
+
+    public String getCompletion() { return Completion;}
+
+    public void setCompletion(String completion) { this.Completion = completion; }
 }
 
-class Unit{
+class Unit {
+    private int Key;
     private String UnitId;
     private String UnitName;
-    public Unit(){};
 
+    public Unit() {
+    }
+
+    ;
+
+    public int getKey() {
+        return Key;
+    }
+
+    public void setKey(int key) {
+        Key = key;
+    }
     public String getUnitId() {
         return UnitId;
     }
@@ -117,4 +137,5 @@ class Unit{
     public void setUnitName(String unitName) {
         this.UnitName = unitName;
     }
+
 }

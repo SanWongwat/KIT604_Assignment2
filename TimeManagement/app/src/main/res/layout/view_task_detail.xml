@@ -1,7 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
+    android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
+    <include
+        layout="@layout/tool_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
 
     <LinearLayout
         android:id="@+id/ll_title"
@@ -9,6 +14,7 @@
         android:layout_height="40dp"
         android:layout_marginBottom="@dimen/input_gap"
         android:layout_marginLeft="@dimen/input_gap"
+        android:layout_below="@id/toolbar"
         android:orientation="horizontal">
 
         <TextView
@@ -17,10 +23,11 @@
             android:gravity="center|left"
             android:text="@string/title"/>
 
-        <EditText
-            android:id="@+id/et_add_title"
+        <TextView
+            android:id="@+id/tv_detail_title"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:gravity="center|left"/>
     </LinearLayout>
 
     <LinearLayout
@@ -39,11 +46,11 @@
             android:layout_below="@+id/tv_title"
             android:text="@string/duedate" />
 
-        <EditText
-            android:id="@+id/et_add_duedate"
+        <TextView
+            android:id="@+id/tv_detail_duedate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="none" />
+            android:gravity="center|left"/>
     </LinearLayout>
 
     <LinearLayout
@@ -61,10 +68,11 @@
             android:gravity="center|left"
             android:text="@string/time" />
 
-        <EditText
-            android:id="@+id/et_add_time"
+        <TextView
+            android:id="@+id/tv_detail_time"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:gravity="center|left"/>
     </LinearLayout>
 
     <LinearLayout
@@ -82,10 +90,11 @@
             android:gravity="center|left"
             android:text="@string/unitcode" />
 
-        <Spinner
-            android:id="@+id/spn_add_unitcode"
+        <TextView
+            android:id="@+id/tv_detail_unitcode"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"></Spinner>
+            android:layout_height="wrap_content"
+            android:gravity="center|left" />
     </LinearLayout>
 
     <LinearLayout
@@ -103,10 +112,11 @@
             android:gravity="center|left"
             android:text="@string/urgency" />
 
-        <Spinner
-            android:id="@+id/spn_add_urgency"
+        <TextView
+            android:id="@+id/tv_detail_urgency"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"></Spinner>
+            android:layout_height="wrap_content"
+            android:gravity="center|left" />
     </LinearLayout>
 
     <LinearLayout
@@ -124,10 +134,11 @@
             android:gravity="center|left"
             android:text="@string/important" />
 
-        <Spinner
-            android:id="@+id/spn_add_important"
+        <TextView
+            android:id="@+id/tv_detail_important"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"></Spinner>
+            android:layout_height="wrap_content"
+            android:gravity="center|left" />
     </LinearLayout>
 
     <LinearLayout
@@ -145,10 +156,11 @@
             android:gravity="center|left"
             android:text="@string/weight" />
 
-        <EditText
-            android:id="@+id/et_add_weight"
+        <TextView
+            android:id="@+id/tv_detail_weight"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:gravity="center|left" />
     </LinearLayout>
 
     <LinearLayout
@@ -166,10 +178,11 @@
             android:gravity="center|left"
             android:text="@string/notify" />
 
-        <ToggleButton
-            android:id="@+id/tgb_add_notify"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/tv_detail_notify"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center|left" />
     </LinearLayout>
 
     <LinearLayout
@@ -187,18 +200,10 @@
             android:gravity="center|left"
             android:text="@string/detail" />
 
-        <EditText
-            android:id="@+id/et_add_detail"
+        <TextView
+            android:id="@+id/tv_detail_detail"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:gravity="center|left" />
     </LinearLayout>
-
-    <Button
-        android:id="@+id/btn_add_confirm"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/ll_detail"
-        android:onClick="AddTask"
-        android:layout_alignParentRight="true"
-        android:text="Confirm" />
 </RelativeLayout>
