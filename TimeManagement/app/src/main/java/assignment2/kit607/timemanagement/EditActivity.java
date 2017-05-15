@@ -52,49 +52,31 @@ public class EditActivity extends AppCompatActivity implements AdapterView.OnIte
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 if (item.getItemId() == R.id.btn_toolbar_back) {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(EditActivity.this);
-                    builder.setTitle(R.string.confirm_cancel_addEdit_title)
-                            .setMessage(R.string.confirm_cancel_addEdit_message)
-                            .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialogInterface, int i) {
-                                    EditActivity.this.finish();
-                                }
-                            })
-                            .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialogInterface, int i) {
-                                    //do nothing
-                                }
-                            });
-                    AlertDialog dialog = builder.create();
-                    dialog.show();
+                    AlertDialog.Builder bldr = Util.AlertDialogBuilder(EditActivity.this
+                            , getString(R.string.confirm_cancel_addEdit_title), getString(R.string.confirm_cancel_addEdit_message));
+                    bldr.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            EditActivity.this.finish();
+                        }
+                    });
+                    bldr.create().show();
                 } else if (item.getItemId() == R.id.btn_toolbar_delete) {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(EditActivity.this);
-                    builder.setTitle(R.string.confirm_delete_task_title)
-                            .setMessage(R.string.confirm_delete_task_message)
-                            .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialogInterface, int i) {
-                                    //delete
-                                    bu = new BU(EditActivity.this);
-                                    Toast toast;
-                                    if(bu.DeleteTask(mTask.getKey())){
-                                        toast = Toast.makeText(EditActivity.this
-                                                , R.string.delete_success, Toast.LENGTH_SHORT);
-                                        toast.show();
-                                        finish();
-                                    }
-                                }
-                            })
-                            .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialogInterface, int i) {
-                                    //do nothing
-                                }
-                            });
-                    AlertDialog dialog = builder.create();
-                    dialog.show();
+                    AlertDialog.Builder bldr = Util.AlertDialogBuilder(EditActivity.this
+                            , getString(R.string.confirm_delete_task_title), getString(R.string.confirm_delete_task_message));
+                    bldr.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            bu = new BU(EditActivity.this);
+                            if (bu.DeleteTask(mTask.getKey())) {
+                                Toast toast = Toast.makeText(EditActivity.this
+                                        , R.string.delete_success, Toast.LENGTH_SHORT);
+                                toast.show();
+                                finish();
+                            }
+                        }
+                    });
+                    bldr.create().show();
                 }
 
                 return false;
@@ -102,6 +84,7 @@ public class EditActivity extends AppCompatActivity implements AdapterView.OnIte
         });
         InitialisePageUI();
     }
+
     @Override
     public void onBackPressed() {
         AlertDialog.Builder builder = new AlertDialog.Builder(EditActivity.this);
@@ -122,6 +105,7 @@ public class EditActivity extends AppCompatActivity implements AdapterView.OnIte
         AlertDialog dialog = builder.create();
         dialog.show();
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu_edit_delete; this adds items to the action bar if it is present.
@@ -349,16 +333,14 @@ public class EditActivity extends AppCompatActivity implements AdapterView.OnIte
         if (cb_complete.isChecked()) complete = getString(R.string.Y);
         t.setCompletion(complete);
 
-        Toast toast;
         if (bu.EditTask(t)) {
-            toast = Toast.makeText(this, R.string.edit_success, Toast.LENGTH_SHORT);
+            Toast toast = Toast.makeText(this, R.string.edit_success, Toast.LENGTH_SHORT);
             toast.show();
 
             Intent intent = new Intent();
             intent.putExtra(TaskTable.TABLE_NAME, t);
             t.set_unitCode(bu.RetrieveUnitCode(t.get_unitCode().getKey()));
             setResult(RESULT_OK, intent);
-
             finish();
         }
 

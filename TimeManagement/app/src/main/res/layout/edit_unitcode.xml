@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -23,7 +22,7 @@
             android:text="Unit ID:"/>
 
         <EditText
-            android:id="@+id/um_add_unitid"
+            android:id="@+id/et_edit_unitId"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
     </LinearLayout>
@@ -42,7 +41,7 @@
             android:text="Unit Name:"/>
 
         <EditText
-            android:id="@+id/um_add_unitname"
+            android:id="@+id/et_edit_unitName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
     </LinearLayout>
@@ -50,6 +49,7 @@
 
 
     <Button
+        android:id="@+id/btn_edit_uc_confirm"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/ll_unitname"

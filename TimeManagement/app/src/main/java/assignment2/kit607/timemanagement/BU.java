@@ -15,7 +15,8 @@ public class BU {
     private final String TAG = "BU";
     private DBAdapter db;
     private Cursor csr;
-    public BU(Context ctx){
+
+    public BU(Context ctx) {
         db = new DBAdapter(ctx);
     }
 
@@ -23,13 +24,13 @@ public class BU {
     public List<Unit> GetUnitCode() {
         List<Unit> unitList = new ArrayList<Unit>();
         csr = db.RetrieveUnitCode();
-        if(csr!=null){
-            if(csr.getCount()==0){
-                    Log.d(TAG, "Database is empty.");
+        if (csr != null) {
+            if (csr.getCount() == 0) {
+                Log.d(TAG, "Database is empty.");
             }
         }
 
-        while(csr.moveToNext()){
+        while (csr.moveToNext()) {
             Unit u = new Unit();
             u.setKey(csr.getInt(csr.getColumnIndex(UnitTable.KEY)));
             u.setUnitId(csr.getString(csr.getColumnIndex(UnitTable.COLUMN_NAME_UNITID)));
@@ -39,7 +40,7 @@ public class BU {
         return unitList;
     }
 
-    public List<Task> RetrieveBriefTaskInfo(){
+    public List<Task> RetrieveBriefTaskInfo() {
         Cursor cursor = db.GetBriefTaskInfo();
         if (cursor != null) {
             if (cursor.getCount() == 0) {
@@ -71,7 +72,7 @@ public class BU {
     }
 
     //edit unit code
-    public boolean EditUnitCode(Unit u){
+    public boolean EditUnitCode(Unit u) {
         return db.UpdateUnitCode(u);
     }
 
@@ -88,13 +89,13 @@ public class BU {
             if (cursor == null || cursor.isAfterLast() || cursor.isBeforeFirst()) {
                 return null;
             }
-        t.setKey(cursor.getInt(cursor.getColumnIndex(TaskTable.KEY)));
-        t.setTitle(cursor.getString(cursor.getColumnIndex(TaskTable.COLUMN_NAME_TITLE)));
-        t.setDuedate(cursor.getString(cursor.getColumnIndex(TaskTable.COLUMN_NAME_DUEDATE)));
-        t.setTime(cursor.getString(cursor.getColumnIndex(TaskTable.COLUMN_NAME_TIME)));
+            t.setKey(cursor.getInt(cursor.getColumnIndex(TaskTable.KEY)));
+            t.setTitle(cursor.getString(cursor.getColumnIndex(TaskTable.COLUMN_NAME_TITLE)));
+            t.setDuedate(cursor.getString(cursor.getColumnIndex(TaskTable.COLUMN_NAME_DUEDATE)));
+            t.setTime(cursor.getString(cursor.getColumnIndex(TaskTable.COLUMN_NAME_TIME)));
 
-        Unit u = new Unit();
-        Cursor cu = db.RetrieveUnitCode(cursor.getString(cursor.getColumnIndex(TaskTable.COLUMN_NAME_UNITCODE)));
+            Unit u = new Unit();
+            Cursor cu = db.RetrieveUnitCode(cursor.getString(cursor.getColumnIndex(TaskTable.COLUMN_NAME_UNITCODE)));
             cu.moveToFirst();
             while (!cu.isAfterLast()) {
                 if (cu == null || cu.isAfterLast() || cu.isBeforeFirst()) {
@@ -105,13 +106,13 @@ public class BU {
                 u.setUnitName(cu.getString(cu.getColumnIndex(UnitTable.COLUMN_NAME_UNITNAME)));
                 cu.moveToNext();
             }
-        t.set_unitCode(u);
-        t.setUrgency(cursor.getString(cursor.getColumnIndex(TaskTable.COLUMN_NAME_URGENCY)));
-        t.setImportant(cursor.getString(cursor.getColumnIndex(TaskTable.COLUMN_NAME_IMPORTANT)));
-        t.setWeight(cursor.getString(cursor.getColumnIndex(TaskTable.COLUMN_NAME_WEIGHT)));
-        t.setNotify(cursor.getString(cursor.getColumnIndex(TaskTable.COLUMN_NAME_NOTIFY)));
-        t.setCompletion(cursor.getString(cursor.getColumnIndex(TaskTable.COLUMN_NAME_COMPLETE)));
-        t.setDetail(cursor.getString(cursor.getColumnIndex(TaskTable.COLUMN_NAME_DETAIL)));
+            t.set_unitCode(u);
+            t.setUrgency(cursor.getString(cursor.getColumnIndex(TaskTable.COLUMN_NAME_URGENCY)));
+            t.setImportant(cursor.getString(cursor.getColumnIndex(TaskTable.COLUMN_NAME_IMPORTANT)));
+            t.setWeight(cursor.getString(cursor.getColumnIndex(TaskTable.COLUMN_NAME_WEIGHT)));
+            t.setNotify(cursor.getString(cursor.getColumnIndex(TaskTable.COLUMN_NAME_NOTIFY)));
+            t.setCompletion(cursor.getString(cursor.getColumnIndex(TaskTable.COLUMN_NAME_COMPLETE)));
+            t.setDetail(cursor.getString(cursor.getColumnIndex(TaskTable.COLUMN_NAME_DETAIL)));
             cursor.moveToNext();
         }
         return t;
@@ -129,9 +130,9 @@ public class BU {
             if (cursor == null || cursor.isAfterLast() || cursor.isBeforeFirst()) {
                 return null;
             }
-                u.setKey(cursor.getInt(cursor.getColumnIndex(UnitTable.KEY)));
-                u.setUnitId(cursor.getString(cursor.getColumnIndex(UnitTable.COLUMN_NAME_UNITID)));
-                u.setUnitName(cursor.getString(cursor.getColumnIndex(UnitTable.COLUMN_NAME_UNITNAME)));
+            u.setKey(cursor.getInt(cursor.getColumnIndex(UnitTable.KEY)));
+            u.setUnitId(cursor.getString(cursor.getColumnIndex(UnitTable.COLUMN_NAME_UNITID)));
+            u.setUnitName(cursor.getString(cursor.getColumnIndex(UnitTable.COLUMN_NAME_UNITNAME)));
             cursor.moveToNext();
         }
         return u;
@@ -140,5 +141,9 @@ public class BU {
 
     public boolean DeleteTask(int key) {
         return db.DeleteTask(key);
+    }
+
+    public boolean DeleteUnitCode(int key) {
+        return db.DeleteUnitCode(key);
     }
 }

@@ -1,6 +1,6 @@
 package assignment2.kit607.timemanagement;
 
-import android.app.AlertDialog;
+import android.support.v7.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -42,30 +42,21 @@ public class ViewTaskDetailActivity extends AppCompatActivity {
                     intent.putExtra(TaskTable.TABLE_NAME, mTask);
                     startActivityForResult(intent, Util._requestCode);
                 } else if (item.getItemId() == R.id.btn_toolbar_delete) {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(ViewTaskDetailActivity.this);
-                    builder.setTitle(R.string.confirm_delete_task_title)
-                            .setMessage(R.string.confirm_delete_task_message)
-                            .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialogInterface, int i) {
-                                    BU bu = new BU(ViewTaskDetailActivity.this);
-                                    Toast toast;
+                    AlertDialog.Builder bldr = Util.AlertDialogBuilder(ViewTaskDetailActivity.this
+                            , getString(R.string.confirm_delete_task_title), getString(R.string.confirm_delete_task_message));
+                    bldr.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            BU bu = new BU(ViewTaskDetailActivity.this);
                                     if(bu.DeleteTask(mTask.getKey())){
-                                        toast = Toast.makeText(ViewTaskDetailActivity.this
+                                        Toast toast = Toast.makeText(ViewTaskDetailActivity.this
                                                 , R.string.delete_success, Toast.LENGTH_SHORT);
                                         toast.show();
                                         finish();
                                     }
-                                }
-                            })
-                            .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialogInterface, int i) {
-                                    //do nothing
-                                }
-                            });
-                    AlertDialog dialog = builder.create();
-                    dialog.show();
+                        }
+                    });
+                    bldr.create().show();
                 }
 
                 return false;

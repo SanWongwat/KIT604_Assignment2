@@ -48,6 +48,15 @@ public class MainActivity extends AppCompatActivity  implements CalendarDialogFr
                 startActivity(intent);
             }
         });
+
+        Button btn_setting = (Button)findViewById(R.id.main_activity_button_setting);
+        btn_setting.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, SettingActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     protected void AddUnitCode(View view) {

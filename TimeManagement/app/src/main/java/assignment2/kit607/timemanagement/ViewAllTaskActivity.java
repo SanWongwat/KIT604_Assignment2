@@ -40,6 +40,9 @@ public class ViewAllTaskActivity extends AppCompatActivity {
             public boolean onMenuItemClick(MenuItem item) {
                 if (item.getItemId() == R.id.btn_toolbar_back) {
                     ViewAllTaskActivity.this.finish();
+                }else if (item.getItemId() == R.id.btn_toolber_add) {
+                    Intent intent = new Intent(ViewAllTaskActivity.this,AddActivity.class);
+                    startActivity(intent);
                 }
 
                 return false;
@@ -75,7 +78,7 @@ public class ViewAllTaskActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu_edit_delete; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu, menu);
+        getMenuInflater().inflate(R.menu.menu_add, menu);
         return true;
     }
 

@@ -109,9 +109,10 @@ public class DBAdapter {
     public boolean UpdateUnitCode(Unit u) {
         sdb = dbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
+        values.put(UnitTable.COLUMN_NAME_UNITID, u.getUnitId());
         values.put(UnitTable.COLUMN_NAME_UNITNAME, u.getUnitName());
-        String selection = UnitTable.COLUMN_NAME_UNITID + " = ?";
-        String[] SelectionArgs = {u.getUnitId()};
+        String selection = UnitTable.KEY + " = ?";
+        String[] SelectionArgs = {String.valueOf(u.getKey())};
         long res = -1;
         try {
             res = sdb.update(UnitTable.TABLE_NAME, values, selection, SelectionArgs);
@@ -126,10 +127,10 @@ public class DBAdapter {
     }
 
     //delete unitcode
-    public boolean DeleteUnitCode(Unit u) {
+    public boolean DeleteUnitCode(int key) {
         sdb = dbHelper.getWritableDatabase();
-        String selection = UnitTable.COLUMN_NAME_UNITID + " = ?";
-        String[] SelectionArgs = {u.getUnitId()};
+        String selection = UnitTable.KEY + " = ?";
+        String[] SelectionArgs = {String.valueOf(key)};
         long res = -1;
         try {
             res = sdb.delete(UnitTable.TABLE_NAME, selection, SelectionArgs);

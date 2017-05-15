@@ -50,23 +50,15 @@ public class AddActivity extends AppCompatActivity implements AdapterView.OnItem
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 if (item.getItemId() == R.id.btn_toolbar_back) {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(AddActivity.this);
-                    builder.setTitle(R.string.confirm_cancel_addEdit_title)
-                            .setMessage(R.string.confirm_cancel_addEdit_message)
-                            .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialogInterface, int i) {
-                                    AddActivity.this.finish();
-                                }
-                            })
-                            .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialogInterface, int i) {
-                                    //do nothing
-                                }
-                            });
-                    AlertDialog dialog = builder.create();
-                    dialog.show();
+                    AlertDialog.Builder bldr = Util.AlertDialogBuilder(AddActivity.this
+                            , getString(R.string.confirm_cancel_addEdit_title), getString(R.string.confirm_cancel_addEdit_message));
+                    bldr.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            AddActivity.this.finish();
+                        }
+                    });
+                    bldr.create().show();
                 }
 
                 return false;
@@ -82,26 +74,20 @@ public class AddActivity extends AppCompatActivity implements AdapterView.OnItem
         getMenuInflater().inflate(R.menu.menu, menu);
         return true;
     }
+
     @Override
     public void onBackPressed() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(AddActivity.this);
-        builder.setTitle(R.string.confirm_cancel_addEdit_title)
-                .setMessage(R.string.confirm_cancel_addEdit_message)
-                .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        AddActivity.this.finish();
-                    }
-                })
-                .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        //do nothing
-                    }
-                });
-        AlertDialog dialog = builder.create();
-        dialog.show();
+        AlertDialog.Builder bldr = Util.AlertDialogBuilder(AddActivity.this
+                , getString(R.string.confirm_cancel_addEdit_title), getString(R.string.confirm_cancel_addEdit_message));
+        bldr.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                AddActivity.this.finish();
+            }
+        });
+        bldr.create().show();
     }
+
     @Override
     public void onCalendarDialogPositiveClick(DialogFragment dialogFragment) {
         Dialog dialog = dialogFragment.getDialog();
