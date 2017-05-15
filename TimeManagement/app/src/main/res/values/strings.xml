@@ -1,11 +1,12 @@
 <resources>
-    <string name="app_name">TimeManagement</string>
+    <string name="app_name">Time Management</string>
     <string name="title">Title:</string>
     <string name="duedate">Duedate:</string>
     <string name="time">Time:</string>
     <string name="unitcode">UnitCode:</string>
     <string name="urgency">Urgency:</string>
     <string name="important">Important:</string>
+    <string name="category">Category:</string>
     <string name="weight">Weight:</string>
     <string name="notify">Notification:</string>
     <string name="detail">Detail:</string>
@@ -18,9 +19,13 @@
     <string name="cancel">Cancel</string>
     <string name="add_success">Successfully create a task.</string>
     <string name="edit_success">Successfully edit a task.</string>
-    <string name="yes">Y</string>
-    <string name="no">N</string>
-    <string name="complete">Completed</string>
+    <string name="Y">Y</string>
+    <string name="yes">Yes</string>
+    <string name="N">N</string>
+    <string name="no">No</string>
+    <string name="status">Status:</string>
+    <string name="completed">Completed</string>
+    <string name="complete">Complete</string>
     <string name="incomplete">Incomplete</string>
     <string name="confirm_complete_title">Mark completed confirmation</string>
     <string name="confirm_complete_message">Do you want to mark the task as completed?</string>
@@ -28,7 +33,10 @@
     <string name="confirm_delete_task_message">Do you want to delete the task?</string>
     <string name="confirm_delete_unitcode_title">Delete unitcode confirmation</string>
     <string name="confirm_delete_unitcode_message">Do you want to delete the unitcode?</string>
+    <string name="confirm_cancel_addEdit_title">Cancel changes</string>
+    <string name="confirm_cancel_addEdit_message">Do you want to abandon the changes?</string>
     <string name="main_screen_tmq">Your Time Managment Questionnaire Score:</string>
     <string name="toolbar_edit">Edit</string>
+    <string name="delete_success">Successfully delete the task</string>
 
 </resources>

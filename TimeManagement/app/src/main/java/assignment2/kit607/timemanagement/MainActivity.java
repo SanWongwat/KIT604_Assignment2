@@ -50,13 +50,6 @@ public class MainActivity extends AppCompatActivity  implements CalendarDialogFr
         });
     }
 
-    protected void GetTask(View view) {
-        mTaskList = RetrieveTaskList();
-        mTaskListAdapter = new TaskListAdapter();
-//        ListView taskListView = (ListView) findViewById(R.id.TaskListView);
-//        taskListView.setAdapter(mTaskListAdapter);
-    }
-
     protected void AddUnitCode(View view) {
         Intent intent = new Intent(this, AddUnitCodeActivity.class);
         startActivity(intent);
@@ -77,12 +70,12 @@ public class MainActivity extends AppCompatActivity  implements CalendarDialogFr
 
     }
 
-    public List<Task> RetrieveTaskList() {
-        List<Task> taskList = new ArrayList<Task>();
-        DBAdapter db = new DBAdapter(this);
-        taskList = db.GetTask();
-        return taskList;
-    }
+//    public List<Task> RetrieveTaskList() {
+//        List<Task> taskList = new ArrayList<Task>();
+//        DBAdapter db = new DBAdapter(this);
+//        taskList = db.GetTask();
+//        return taskList;
+//    }
 
     class TaskListAdapter extends ArrayAdapter<Task> {
         TaskListAdapter() {

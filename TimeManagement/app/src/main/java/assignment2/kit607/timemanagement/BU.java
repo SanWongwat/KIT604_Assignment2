@@ -116,4 +116,29 @@ public class BU {
         }
         return t;
     }
+
+    public boolean EditTask(Task t) {
+        return db.UpdateTask(t);
+    }
+
+    public Unit RetrieveUnitCode(int key) {
+        Cursor cursor = db.GetUnitCode(key);
+        Unit u = new Unit();
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()) {
+            if (cursor == null || cursor.isAfterLast() || cursor.isBeforeFirst()) {
+                return null;
+            }
+                u.setKey(cursor.getInt(cursor.getColumnIndex(UnitTable.KEY)));
+                u.setUnitId(cursor.getString(cursor.getColumnIndex(UnitTable.COLUMN_NAME_UNITID)));
+                u.setUnitName(cursor.getString(cursor.getColumnIndex(UnitTable.COLUMN_NAME_UNITNAME)));
+            cursor.moveToNext();
+        }
+        return u;
+    }
+
+
+    public boolean DeleteTask(int key) {
+        return db.DeleteTask(key);
+    }
 }

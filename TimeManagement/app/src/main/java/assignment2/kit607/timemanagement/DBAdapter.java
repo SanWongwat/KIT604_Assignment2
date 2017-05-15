@@ -9,7 +9,6 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by Allen on 5/6/2017.
@@ -48,50 +47,6 @@ public class DBAdapter {
         else return false;
     }
 
-    public List<Task> GetTask() {
-        SQLiteDatabase db = dbHelper.getReadableDatabase();
-
-        //String query = "SELECT t.*,u.Unitname  FROM Task t INNER JOIN UnitCode u ON t.UnitCode = u.UnitId";
-        String query = "SELECT * FROM " + TaskTable.TABLE_NAME;
-
-        Cursor cursor = db.rawQuery(query, null);
-        if (cursor != null) {
-            if (cursor.getCount() == 0) {
-
-                Log.d(TAG, "Database is empty.");
-            }
-        }
-        List<Task> taskList = new ArrayList<Task>();
-        Log.d(TAG, "Begin retreiving data.");
-        while (cursor.moveToNext()) {
-            Task task = new Task();
-            int index;
-            index = cursor.getColumnIndex(TaskTable.COLUMN_NAME_TITLE);
-            task.setTitle(cursor.getString(index));
-//            index = cursor.getColumnIndex(TaskTable.COLUMN_NAME_DUEDATE);
-//            task.setDuedate(cursor.getString(index));
-//            index = cursor.getColumnIndex(TaskTable.COLUMN_NAME_UNITCODE);
-//            String unitCode = cursor.getString(index);
-//            index = cursor.getColumnIndex(UnitTable.COLUMN_NAME_UNITNAME);
-//            String unitName = cursor.getString(index);
-//            Unit unit = new Unit();
-//            unit.set_unitCode(unitCode);
-//            unit.setUnitName(unitName);
-//            task.set_unitCode(unit);
-//            index = cursor.getColumnIndex(TaskTable.COLUMN_NAME_URGENCY);
-//            task.setUrgency(cursor.getString(index));
-//            index = cursor.getColumnIndex(TaskTable.COLUMN_NAME_IMPORTANT);
-//            task.setImportant(cursor.getString(index));
-//            index = cursor.getColumnIndex(TaskTable.COLUMN_NAME_WEIGHT);
-//            task.setWeight(cursor.getString(index));
-//            index = cursor.getColumnIndex(TaskTable.COLUMN_NAME_NOTIFY);
-//            task.setNotify(cursor.getString(index));
-//            index = cursor.getColumnIndex(TaskTable.COLUMN_NAME_DETAIL);
-//            task.setDetail(cursor.getString(index));
-            taskList.add(task);
-        }
-        return taskList;
-    }
 
     public Cursor GetBriefTaskInfo() {
         sdb = dbHelper.getReadableDatabase();
@@ -191,7 +146,7 @@ public class DBAdapter {
     public boolean CompleteTask(Task t) {
         sdb = dbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put(TaskTable.COLUMN_NAME_COMPLETE, Resources.getSystem().getString(R.string.yes));
+        values.put(TaskTable.COLUMN_NAME_COMPLETE, Resources.getSystem().getString(R.string.Y));
         String selection = TaskTable.KEY + " = ?";
         String[] SelectionArgs = {String.valueOf(t.getKey())};
         long res = -1;
@@ -213,6 +168,55 @@ public class DBAdapter {
         String[] selectionArgs = {String.valueOf(key)};
         Cursor c = sdb.query(TaskTable.TABLE_NAME, null, selection, selectionArgs, null, null, null);
         return c;
+    }
+
+    public boolean UpdateTask(Task t) {
+        Log.d(TAG, "begin update");
+        sdb = dbHelper.getWritableDatabase();
+        long res = -1;
+        ContentValues values = new ContentValues();
+        values.put(TaskTable.COLUMN_NAME_TITLE, t.getTitle());
+        values.put(TaskTable.COLUMN_NAME_DUEDATE, t.getDuedate());
+        values.put(TaskTable.COLUMN_NAME_TIME, t.getTime());
+        values.put(TaskTable.COLUMN_NAME_UNITCODE, t.get_unitCode().getKey());
+        values.put(TaskTable.COLUMN_NAME_URGENCY, t.getUrgency());
+        values.put(TaskTable.COLUMN_NAME_IMPORTANT, t.getImportant());
+        values.put(TaskTable.COLUMN_NAME_WEIGHT, t.getWeight());
+        values.put(TaskTable.COLUMN_NAME_NOTIFY, t.isNotify());
+        values.put(TaskTable.COLUMN_NAME_DETAIL, t.getDetail());
+        values.put(TaskTable.COLUMN_NAME_COMPLETE, t.getCompletion());
+        String selection = TaskTable.KEY + " = ?";
+        String[] selectionArgs = {String.valueOf(t.getKey())};
+        try {
+            res = sdb.update(TaskTable.TABLE_NAME, values, selection, selectionArgs);
+        } catch (Exception e) {
+            throw e;
+        }
+        if (res != -1) return true;
+        else return false;
+    }
+
+    public Cursor GetUnitCode(int key) {
+        sdb = dbHelper.getReadableDatabase();
+        String selection = UnitTable.KEY + " = ?";
+        String[] selectionArgs = {String.valueOf(key)};
+        Cursor c = sdb.query(UnitTable.TABLE_NAME, null, selection, selectionArgs, null, null, null);
+        return c;
+    }
+
+    public boolean DeleteTask(int key) {
+        sdb = dbHelper.getWritableDatabase();
+        long res = -1;
+        String selection = TaskTable.KEY + " = ?";
+        String[] selectionArgs = {String.valueOf(key)};
+        try {
+            res = sdb.delete(TaskTable.TABLE_NAME, selection, selectionArgs);
+        } catch (Exception e) {
+            throw e;
+        }
+        if (res != -1) return true;
+        else return false;
+
     }
 
 

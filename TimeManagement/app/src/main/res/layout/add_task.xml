@@ -2,14 +2,19 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/tool_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
     <LinearLayout
         android:id="@+id/ll_title"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_marginBottom="@dimen/input_gap"
         android:layout_marginLeft="@dimen/input_gap"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:layout_below="@+id/toolbar">
 
         <TextView
             android:layout_width="80dp"
@@ -89,7 +94,7 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/ll_urgency"
+        android:id="@+id/ll_category"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_marginBottom="@dimen/input_gap"
@@ -116,7 +121,7 @@
         android:layout_marginBottom="@dimen/input_gap"
         android:layout_marginLeft="@dimen/input_gap"
         android:orientation="horizontal"
-        android:layout_below="@+id/ll_urgency">
+        android:layout_below="@+id/ll_category">
 
         <TextView
             android:layout_width="80dp"
@@ -198,7 +203,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/ll_detail"
-        android:onClick="AddTask"
+        android:onClick="EditTask"
         android:layout_alignParentRight="true"
         android:text="Confirm" />
 </RelativeLayout>

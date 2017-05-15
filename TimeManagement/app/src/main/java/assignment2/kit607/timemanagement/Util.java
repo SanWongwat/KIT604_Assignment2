@@ -11,6 +11,7 @@ class Util {
     public static final String[] _low_high_array = new String[]{"Low", "High"};
     public static final String _NewUnitcodeText = "Create new unit code.";
     public static final String _FirstSpinerText = "--Select Unitcode--";
+    public static final int _requestCode = 0;
 
 }
 

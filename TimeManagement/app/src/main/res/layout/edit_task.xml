@@ -1,6 +1,228 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
+    <include
+        layout="@layout/tool_bar"
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+    <LinearLayout
+        android:id="@+id/ll_title"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginBottom="@dimen/input_gap"
+        android:layout_marginLeft="@dimen/input_gap"
+        android:orientation="horizontal"
+        android:layout_below="@+id/toolbar">
 
-</LinearLayout>
+        <TextView
+            android:layout_width="80dp"
+            android:layout_height="match_parent"
+            android:gravity="center|left"
+            android:text="@string/title"/>
+
+        <EditText
+            android:id="@+id/et_edit_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_duedate"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginBottom="@dimen/input_gap"
+        android:layout_marginLeft="@dimen/input_gap"
+        android:orientation="horizontal"
+        android:layout_below="@+id/ll_title">
+
+        <TextView
+            android:layout_width="80dp"
+            android:layout_height="match_parent"
+            android:gravity="center|left"
+            android:layout_below="@+id/tv_title"
+            android:text="@string/duedate" />
+
+        <EditText
+            android:id="@+id/et_edit_duedate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_time"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginBottom="@dimen/input_gap"
+        android:layout_marginLeft="@dimen/input_gap"
+        android:orientation="horizontal"
+        android:layout_below="@+id/ll_duedate">
+
+        <TextView
+            android:layout_width="80dp"
+            android:layout_height="match_parent"
+            android:gravity="center|left"
+            android:text="@string/time" />
+
+        <EditText
+            android:id="@+id/et_edit_time"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_unitcode"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginBottom="@dimen/input_gap"
+        android:layout_marginLeft="@dimen/input_gap"
+        android:orientation="horizontal"
+        android:layout_below="@+id/ll_time">
+
+        <TextView
+            android:layout_width="80dp"
+            android:layout_height="match_parent"
+            android:gravity="center|left"
+            android:text="@string/unitcode" />
+
+        <Spinner
+            android:id="@+id/spn_edit_unitcode"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"></Spinner>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_category"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginBottom="@dimen/input_gap"
+        android:layout_marginLeft="@dimen/input_gap"
+        android:orientation="horizontal"
+        android:layout_below="@+id/ll_unitcode">
+
+        <TextView
+            android:layout_width="80dp"
+            android:layout_height="match_parent"
+            android:gravity="center|left"
+            android:text="@string/urgency" />
+
+        <Spinner
+            android:id="@+id/spn_edit_urgency"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"></Spinner>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_important"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginBottom="@dimen/input_gap"
+        android:layout_marginLeft="@dimen/input_gap"
+        android:orientation="horizontal"
+        android:layout_below="@+id/ll_category">
+
+        <TextView
+            android:layout_width="80dp"
+            android:layout_height="match_parent"
+            android:gravity="center|left"
+            android:text="@string/important" />
+
+        <Spinner
+            android:id="@+id/spn_edit_important"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"></Spinner>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_weight"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginBottom="@dimen/input_gap"
+        android:layout_marginLeft="@dimen/input_gap"
+        android:orientation="horizontal"
+        android:layout_below="@+id/ll_important">
+
+        <TextView
+            android:layout_width="80dp"
+            android:layout_height="match_parent"
+            android:gravity="center|left"
+            android:text="@string/weight" />
+
+        <EditText
+            android:id="@+id/et_edit_weight"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_notify"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginBottom="@dimen/input_gap"
+        android:layout_marginLeft="@dimen/input_gap"
+        android:orientation="horizontal"
+        android:layout_below="@+id/ll_weight">
+
+        <TextView
+            android:layout_width="80dp"
+            android:layout_height="match_parent"
+            android:gravity="center|left"
+            android:text="@string/notify" />
+
+        <ToggleButton
+            android:id="@+id/tgb_edit_notify"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_detail"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginBottom="@dimen/input_gap"
+        android:layout_marginLeft="@dimen/input_gap"
+        android:orientation="horizontal"
+        android:layout_below="@+id/ll_notify">
+
+        <TextView
+            android:layout_width="80dp"
+            android:layout_height="match_parent"
+            android:gravity="center|left"
+            android:text="@string/detail" />
+
+        <EditText
+            android:id="@+id/et_edit_detail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/ll_complete"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginBottom="@dimen/input_gap"
+        android:layout_marginLeft="@dimen/input_gap"
+        android:orientation="horizontal"
+        android:layout_below="@+id/ll_detail">
+
+        <TextView
+            android:layout_width="80dp"
+            android:layout_height="match_parent"
+            android:gravity="center|left"
+            android:text="@string/status" />
+
+        <CheckBox
+            android:id="@+id/cb_edit_complete"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="@string/complete"/>
+    </LinearLayout>
+    <Button
+        android:id="@+id/btn_edit_confirm"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ll_complete"
+        android:onClick="EditTask"
+        android:layout_alignParentRight="true"
+        android:text="Confirm" />
+</RelativeLayout>

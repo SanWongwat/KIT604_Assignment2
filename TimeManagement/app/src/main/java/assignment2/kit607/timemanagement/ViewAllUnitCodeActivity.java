@@ -18,55 +18,49 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Allen on 5/5/2017.
+ * Created by Allen on 5/15/2017.
  */
 
-public class ViewAllTaskActivity extends AppCompatActivity {
-
-    private final String TAG = "ViewAllTaskActivity";
+public class ViewAllUnitCodeActivity extends AppCompatActivity {
+    private final String TAG = "ViewAllUnitCodeActivity";
     private final int tag_key = 0;
-    List<Task> mTaskList = new ArrayList<Task>();
-    TaskListAdapter mTaskListAdapter = null;
-    BU bu = new BU(this);
+    List<Unit> mUnitList = new ArrayList<Unit>();
+    UnitListAdapter mUnitListAdapter = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.view_all_task);
+        setContentView(R.layout.view_all_unitcode);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 if (item.getItemId() == R.id.btn_toolbar_back) {
-                    ViewAllTaskActivity.this.finish();
+                    ViewAllUnitCodeActivity.this.finish();
                 }
-
                 return false;
             }
         });
-        PopulateListView();
-
     }
 
     @Override
-    public void onResume(){
+    public void onResume() {
         super.onResume();
-        PopulateListView();
     }
 
     private void PopulateListView() {
         BU bu = new BU(this);
-        mTaskList = bu.RetrieveBriefTaskInfo();
-        mTaskListAdapter = new TaskListAdapter();
-        ListView taskListView = (ListView) findViewById(R.id.lw_TaskList);
-        taskListView.setAdapter(mTaskListAdapter);
+        mUnitList = bu.GetUnitCode();
+        mUnitListAdapter = new UnitListAdapter();
+        ListView taskListView = (ListView) findViewById(R.id.lv_unitCode);
+        taskListView.setAdapter(mUnitListAdapter);
         taskListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-                Task t = mTaskList.get(position);
-                Intent intent = new Intent(ViewAllTaskActivity.this, ViewTaskDetailActivity.class);
-                intent.putExtra(TaskTable.KEY, t.getKey());
+                Unit u = mUnitList.get(position);
+                Intent intent = new Intent(ViewAllUnitCodeActivity.this, EditUnitCodeActivity.class);
+                intent.putExtra(TaskTable.KEY, u);
                 startActivity(intent);
             }
         });
@@ -79,31 +73,19 @@ public class ViewAllTaskActivity extends AppCompatActivity {
         return true;
     }
 
-    class TaskListAdapter extends ArrayAdapter<Task> {
-        TaskListAdapter() {
-            super(ViewAllTaskActivity.this, android.R.layout.simple_list_item_1, mTaskList);
+    class UnitListAdapter extends ArrayAdapter<Unit> {
+        UnitListAdapter() {
+            super(ViewAllUnitCodeActivity.this, android.R.layout.simple_list_item_1, mUnitList);
         }
 
         public View getView(int position, View row, ViewGroup parent) {
 
             LayoutInflater inflater = getLayoutInflater();
             row = inflater.inflate(R.layout.task_listrow, null);
-            Task t = mTaskList.get(position);
-            TextView title = (TextView) row.findViewById(R.id.tv_viewrow_title);
-            title.setText(t.getTitle());
+            Unit unit = mUnitList.get(position);
+            TextView title = (TextView) row.findViewById(R.id.tv_unit);
+            title.setText(unit.getUnitId() + ": " + unit.getUnitName());
 
-            TextView duedate = (TextView) row.findViewById(R.id.tv_viewrow_duedate);
-            duedate.setText(t.getDuedate());
-
-            TextView time = (TextView) row.findViewById(R.id.tv_viewrow_time);
-            time.setText(t.getTime());
-
-            TextView complete = (TextView) row.findViewById(R.id.tv_viewrow_completion);
-            if (t.getCompletion().equals(getString(R.string.N))) {
-                complete.setText(getString(R.string.incomplete));
-            } else {
-                complete.setText(getString(R.string.complete));
-            }
             return row;
         }
     }

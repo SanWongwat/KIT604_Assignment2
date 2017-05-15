@@ -98,7 +98,7 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/ll_urgency"
+        android:id="@+id/ll_category"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_marginBottom="@dimen/input_gap"
@@ -110,32 +110,10 @@
             android:layout_width="80dp"
             android:layout_height="match_parent"
             android:gravity="center|left"
-            android:text="@string/urgency" />
+            android:text="@string/category" />
 
         <TextView
-            android:id="@+id/tv_detail_urgency"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center|left" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/ll_important"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_marginBottom="@dimen/input_gap"
-        android:layout_marginLeft="@dimen/input_gap"
-        android:orientation="horizontal"
-        android:layout_below="@+id/ll_urgency">
-
-        <TextView
-            android:layout_width="80dp"
-            android:layout_height="match_parent"
-            android:gravity="center|left"
-            android:text="@string/important" />
-
-        <TextView
-            android:id="@+id/tv_detail_important"
+            android:id="@+id/tv_detail_category"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center|left" />
@@ -148,7 +126,7 @@
         android:layout_marginBottom="@dimen/input_gap"
         android:layout_marginLeft="@dimen/input_gap"
         android:orientation="horizontal"
-        android:layout_below="@+id/ll_important">
+        android:layout_below="@+id/ll_category">
 
         <TextView
             android:layout_width="80dp"
@@ -202,6 +180,27 @@
 
         <TextView
             android:id="@+id/tv_detail_detail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center|left" />
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/ll_complete"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginBottom="@dimen/input_gap"
+        android:layout_marginLeft="@dimen/input_gap"
+        android:orientation="horizontal"
+        android:layout_below="@+id/ll_detail">
+
+        <TextView
+            android:layout_width="80dp"
+            android:layout_height="match_parent"
+            android:gravity="center|left"
+            android:text="@string/status" />
+
+        <TextView
+            android:id="@+id/tv_detail_complete"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center|left" />

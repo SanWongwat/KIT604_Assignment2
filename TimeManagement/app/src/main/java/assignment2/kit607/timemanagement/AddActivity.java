@@ -2,10 +2,15 @@ package assignment2.kit607.timemanagement;
 
 import android.app.Dialog;
 import android.app.DialogFragment;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -39,10 +44,64 @@ public class AddActivity extends AppCompatActivity implements AdapterView.OnItem
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_task);
-        InitialiseAddPageUI();
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                if (item.getItemId() == R.id.btn_toolbar_back) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(AddActivity.this);
+                    builder.setTitle(R.string.confirm_cancel_addEdit_title)
+                            .setMessage(R.string.confirm_cancel_addEdit_message)
+                            .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    AddActivity.this.finish();
+                                }
+                            })
+                            .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    //do nothing
+                                }
+                            });
+                    AlertDialog dialog = builder.create();
+                    dialog.show();
+                }
+
+                return false;
+            }
+        });
+        InitialisePageUI();
 
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu_edit_delete; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu, menu);
+        return true;
+    }
+    @Override
+    public void onBackPressed() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(AddActivity.this);
+        builder.setTitle(R.string.confirm_cancel_addEdit_title)
+                .setMessage(R.string.confirm_cancel_addEdit_message)
+                .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        AddActivity.this.finish();
+                    }
+                })
+                .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        //do nothing
+                    }
+                });
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
     @Override
     public void onCalendarDialogPositiveClick(DialogFragment dialogFragment) {
         Dialog dialog = dialogFragment.getDialog();
@@ -99,7 +158,7 @@ public class AddActivity extends AppCompatActivity implements AdapterView.OnItem
     }
 
     //initialise page
-    public void InitialiseAddPageUI() {
+    private void InitialisePageUI() {
 
         EditText et_duedate = (EditText) findViewById(R.id.et_add_duedate);
         et_duedate.setKeyListener(null);
@@ -185,9 +244,9 @@ public class AddActivity extends AppCompatActivity implements AdapterView.OnItem
 
         StringWithTag uSWT = (StringWithTag) ((Spinner) findViewById(R.id.spn_add_unitcode))
                 .getSelectedItem();
-        String uKey  = uSWT.getTag().toString();
+        String uKey = uSWT.getTag().toString();
         Unit u = new Unit();
-        Log.d(TAG,uKey);
+        Log.d(TAG, uKey);
         u.setKey(Integer.parseInt(uKey));
         t.set_unitCode(u);
 
@@ -199,14 +258,14 @@ public class AddActivity extends AppCompatActivity implements AdapterView.OnItem
 
         t.setWeight(((EditText) findViewById(R.id.et_add_weight)).getText().toString());
 
-        String notify = getString(R.string.no);
+        String notify = getString(R.string.N);
         ToggleButton tgb_notify = (ToggleButton) findViewById(R.id.tgb_add_notify);
-        if (tgb_notify.isChecked()) notify = getString(R.string.yes);
+        if (tgb_notify.isChecked()) notify = getString(R.string.Y);
         t.setNotify(notify);
 
         t.setDetail(((EditText) findViewById(R.id.et_add_detail)).getText().toString());
 
-        t.setCompletion(getString(R.string.no));
+        t.setCompletion(getString(R.string.N));
         Log.d("AddTaskView", "Begin add");
 
         Toast toast;
@@ -222,11 +281,11 @@ public class AddActivity extends AppCompatActivity implements AdapterView.OnItem
         List<Unit> unitList = bu.GetUnitCode();
         int arrSize = unitList.size() + 2;
         StringWithTag[] unitNameArr = new StringWithTag[arrSize];
-        unitNameArr[0] = new StringWithTag(Util._FirstSpinerText,"");
-        unitNameArr[unitNameArr.length - 1] = new StringWithTag(Util._NewUnitcodeText,"");
+        unitNameArr[0] = new StringWithTag(Util._FirstSpinerText, "");
+        unitNameArr[unitNameArr.length - 1] = new StringWithTag(Util._NewUnitcodeText, "");
         for (int i = 1; i < arrSize - 1; i++) {
             Unit u = unitList.get(i - 1);
-            unitNameArr[i] =new StringWithTag( u.getUnitId() + ": " + u.getUnitName(),u.getKey());
+            unitNameArr[i] = new StringWithTag(u.getUnitId() + ": " + u.getUnitName(), u.getKey());
         }
         ArrayAdapter<StringWithTag> dataAdapter = new ArrayAdapter<StringWithTag>(this,
                 R.layout.support_simple_spinner_dropdown_item, unitNameArr);
