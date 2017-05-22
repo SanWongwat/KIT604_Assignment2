@@ -18,7 +18,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity  implements CalendarDialogFragment.NoticeDialogListener {
+public class MainActivity extends AppCompatActivity {
 
     private final String TAG = "MainActivity";
     List<Task> mTaskList = new ArrayList<Task>();
@@ -57,6 +57,22 @@ public class MainActivity extends AppCompatActivity  implements CalendarDialogFr
                 startActivity(intent);
             }
         });
+        Button tmq=(Button)findViewById(R.id.main_activity_button_TMQ);
+        tmq.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                Intent i = new Intent(MainActivity.this, tmqList.class);
+                startActivity(i);
+            }
+        });
+        Intent i = getIntent();
+        Bundle b =i.getBundleExtra("score");
+        if(b!=null){
+
+            int s = b.getInt("score");
+            TextView t= (TextView)findViewById(R.id.TMQ_score);
+            t.setText("Your Time Managment Questionnaire Score:"+"\n"+s);
+        }
     }
 
     protected void AddUnitCode(View view) {
@@ -67,16 +83,6 @@ public class MainActivity extends AppCompatActivity  implements CalendarDialogFr
     protected void ShowDialog(View view){
         DialogFragment df = new CalendarDialogFragment();
         df.show(getFragmentManager(),"Calendar");
-    }
-    @Override
-    public void onCalendarDialogPositiveClick(DialogFragment dialog) {
-        Dialog d = dialog.getDialog();
-        CalendarView cv = (CalendarView)d.findViewById(R.id.dlg_calendar);
-        Log.d(TAG, new Date(cv.getDate()).toString());
-    }
-    @Override
-    public void onCalendarDialogNegativeClick(DialogFragment dialog) {
-
     }
 
 //    public List<Task> RetrieveTaskList() {

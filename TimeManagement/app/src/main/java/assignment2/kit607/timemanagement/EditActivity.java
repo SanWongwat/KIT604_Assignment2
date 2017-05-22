@@ -72,7 +72,8 @@ public class EditActivity extends AppCompatActivity implements AdapterView.OnIte
                                 Toast toast = Toast.makeText(EditActivity.this
                                         , R.string.delete_success, Toast.LENGTH_SHORT);
                                 toast.show();
-                                finish();
+                                Intent intent = new Intent(EditActivity.this, ViewAllTaskActivity.class);
+                                startActivity(intent);
                             }
                         }
                     });

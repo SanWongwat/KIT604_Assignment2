@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -12,16 +13,18 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
  * Created by Allen on 5/5/2017.
  */
 
-public class ViewAllTaskActivity extends AppCompatActivity {
+public class ViewAllTaskActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     private final String TAG = "ViewAllTaskActivity";
     private final int tag_key = 0;
@@ -40,20 +43,29 @@ public class ViewAllTaskActivity extends AppCompatActivity {
             public boolean onMenuItemClick(MenuItem item) {
                 if (item.getItemId() == R.id.btn_toolbar_back) {
                     ViewAllTaskActivity.this.finish();
-                }else if (item.getItemId() == R.id.btn_toolber_add) {
-                    Intent intent = new Intent(ViewAllTaskActivity.this,AddActivity.class);
+                } else if (item.getItemId() == R.id.btn_toolber_add) {
+                    Intent intent = new Intent(ViewAllTaskActivity.this, AddActivity.class);
                     startActivity(intent);
                 }
-
                 return false;
             }
         });
+        SetupSorting();
         PopulateListView();
 
     }
 
+    private void SetupSorting() {
+        Spinner spn_sort = (Spinner) findViewById(R.id.spn_view_sort);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+                R.array.sort_array, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
+        spn_sort.setAdapter(adapter);
+        spn_sort.setOnItemSelectedListener(this);
+    }
+
     @Override
-    public void onResume(){
+    public void onResume() {
         super.onResume();
         PopulateListView();
     }
@@ -81,6 +93,30 @@ public class ViewAllTaskActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.menu_add, menu);
         return true;
     }
+
+    public void onItemSelected(AdapterView<?> parent, View view,
+                               int pos, long id) {
+        // An item was selected. You can retrieve the selected item using
+        // parent.getItemAtPosition(pos)
+//        String[] sortedArray = getResources().getStringArray(R.array.sort_array);
+//        String selectedItem = parent.getItemAtPosition(pos).toString();
+        if (pos == 0) {
+            //sort by title
+            Collections.sort(mTaskList, Task.TaskTitleComparator);
+
+        } else if (pos == 1) {
+            // sort by due date
+
+            Collections.sort(mTaskList, Task.DueDateComparator);
+        } else if (pos == 2) {
+            // sort by unit code
+        }
+    }
+
+    public void onNothingSelected(AdapterView<?> parent) {
+        // Another interface callback
+    }
+
 
     class TaskListAdapter extends ArrayAdapter<Task> {
         TaskListAdapter() {

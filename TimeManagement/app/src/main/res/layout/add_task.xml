@@ -203,7 +203,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/ll_detail"
-        android:onClick="EditTask"
+        android:onClick="AddTask"
         android:layout_alignParentRight="true"
         android:text="Confirm" />
 </RelativeLayout>

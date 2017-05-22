@@ -15,30 +15,36 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".AddActivity"
-            android:label="Add New Task">
-        </activity>
-        <activity android:name=".AddUnitCodeActivity"
-            android:label="Add New Unitcode">
-        </activity>
-        <activity android:name=".ViewAllTaskActivity"
-            android:label="Tasks">
-        </activity>
-        <activity android:name=".ViewTaskDetailActivity"
-            android:label="Task Detail">
-        </activity>
-        <activity android:name=".EditActivity"
-            android:label="Edit Task">
-        </activity>
-        <activity android:name=".SettingActivity"
-            android:label="Setting">
-        </activity>
-        <activity android:name=".ViewAllUnitCodeActivity"
-            android:label="Unit Codes">
-        </activity>
-        <activity android:name=".EditUnitCodeActivity"
-            android:label="Edit Unit Code">
-        </activity>
+        <activity
+            android:name=".AddActivity"
+            android:label="Add New Task"></activity>
+        <activity
+            android:name=".AddUnitCodeActivity"
+            android:label="Add New Unitcode"></activity>
+        <activity
+            android:name=".ViewAllTaskActivity"
+            android:label="Tasks"></activity>
+        <activity
+            android:name=".ViewTaskDetailActivity"
+            android:label="Task Detail"></activity>
+        <activity
+            android:name=".EditActivity"
+            android:label="Edit Task"></activity>
+        <activity
+            android:name=".SettingActivity"
+            android:label="Setting"></activity>
+        <activity
+            android:name=".ViewAllUnitCodeActivity"
+            android:label="Unit Codes"></activity>
+        <activity
+            android:name=".EditUnitCodeActivity"
+            android:label="Edit Unit Code"></activity>
+        <activity
+            android:name=".tmqList"
+            android:label="Time management questionnaire"></activity>
+        <activity
+            android:name=".question_detail"
+            android:label="Questions"></activity>
     </application>
 
 </manifest>

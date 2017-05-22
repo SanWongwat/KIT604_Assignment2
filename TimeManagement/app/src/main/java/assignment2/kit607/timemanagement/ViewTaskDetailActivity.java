@@ -73,7 +73,25 @@ public class ViewTaskDetailActivity extends AppCompatActivity {
 
         Unit u = t.get_unitCode();
         setTextView(R.id.tv_detail_unitcode, u.getUnitId() + ": " + u.getUnitName());
-        setTextView(R.id.tv_detail_category, t.getUrgency() + ", " + t.getImportant());
+
+        String urgent = t.getUrgency();
+        String important = t.getImportant();
+        String category = "";
+        if(urgent.equals(getString(R.string.low))){
+            if(important.equals(getString(R.string.low))){
+                category = getString(R.string.isnot_urgent)+" & "+getString(R.string.isnot_important);
+            } else{
+                category = getString(R.string.isnot_urgent)+" & "+getString(R.string.is_important);
+            }
+        } else{
+            if(important.equals(getString(R.string.low))){
+                category = getString(R.string.is_urgent)+" & "+getString(R.string.isnot_important);
+            } else{
+                category = getString(R.string.is_urgent)+" & "+getString(R.string.is_important);
+            }
+        }
+
+        setTextView(R.id.tv_detail_category, category);
         setTextView(R.id.tv_detail_weight, t.getWeight());
 
         String mNotify = t.isNotify();

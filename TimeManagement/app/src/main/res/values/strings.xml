@@ -12,6 +12,10 @@
     <string name="detail">Detail:</string>
     <string name="low">Low</string>
     <string name="high">High</string>
+    <string name="is_urgent">Urgent</string>
+    <string name="isnot_urgent">Not Urgent</string>
+    <string name="is_important">Important</string>
+    <string name="isnot_important">Not Important</string>
     <string name="dlg_calendar_title">Select date</string>
     <string name="dlg_timepicker_title">Select time</string>
     <string name="dlg_weightpicker">Select weight</string>
@@ -38,5 +42,23 @@
     <string name="main_screen_tmq">Your Time Managment Questionnaire Score:</string>
     <string name="toolbar_edit">Edit</string>
     <string name="delete_success">Successfully delete the task</string>
+    <string-array name="sort_array">
+        <item>Title</item>
+        <item>Due Date</item>
+        <item>Important</item>
+        <item>Unit Code</item>
+    </string-array>
+    <string-array name="questions_type">
+        <item>Short-rang Planning</item>
+        <item>Time Attitude</item>
+        <item>Long-range Planning</item>
+    </string-array>
+    <string-array name="Q_choice">
+        <item>Never</item>
+        <item>Rarely</item>
+        <item>Occasionally</item>
+        <item>Regularly</item>
+        <item>Always</item>
+    </string-array>
 
 </resources>

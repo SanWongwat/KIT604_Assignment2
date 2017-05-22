@@ -3,11 +3,17 @@ package assignment2.kit607.timemanagement;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Comparator;
+import java.util.Date;
+
 /**
  * Created by Allen on 5/6/2017.
  */
 
-class Task implements Parcelable {
+class Task implements Parcelable, Comparable<Task> {
     private int Key;
     private String Title;
     private String Duedate;
@@ -154,6 +160,35 @@ class Task implements Parcelable {
     public void setCompletion(String completion) {
         this.Completion = completion;
     }
+
+    public int compareTo(Task t){
+        int compareId = t.getKey();
+        return this.Key - compareId;
+    }
+
+    public static Comparator<Task> TaskTitleComparator = new Comparator<Task>() {
+        @Override
+        public int compare(Task t1, Task t2) {
+            String title1 = t1.getTitle().toUpperCase();
+            String title2 = t2.getTitle().toUpperCase();
+            return title1.compareTo(title2);
+        }
+    };
+
+    public static Comparator<Task> DueDateComparator = new Comparator<Task>() {
+        @Override
+        public int compare(Task t1, Task t2) {
+            DateFormat df = new SimpleDateFormat(Util._dateFormat);
+            Date date1 = new Date(), date2 = new Date();
+            try {
+                date1 = df.parse(t1.getDuedate());
+                date2 = df.parse(t2.getDuedate());
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            return date1.compareTo(date2);
+        }
+    };
 }
 
 class Unit implements Parcelable {
