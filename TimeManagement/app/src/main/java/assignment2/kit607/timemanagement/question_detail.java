@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
@@ -113,24 +114,44 @@ public class question_detail extends AppCompatActivity {
         for(int i=0;i<listView.getChildCount();i++){
             View v = listView.getChildAt(i);
             Spinner spinner =(Spinner)v.findViewById(R.id.question_spinner);
+            TextView textView=(TextView)v.findViewById(R.id.question_content);
+            String questions=textView.getText().toString();
             String selection=spinner.getSelectedItem().toString();
-            selections.add(selection);
+            String total= questions+"_"+"answer:"+selection;
+            selections.add(total);
+
         }
         return selections;
     }
     public int countMark(ArrayList<String> array){
         int score=0;
-        for(String str:array){
-            if(str.equals("Never"))
-                score+=1;
-            if(str.equals("Rarely"))
-                score+=2;
-            if(str.equals("Occasionally"))
-                score+=3;
-            if(str.equals("Regularly"))
-                score+=4;
-            if(str.equals("Always"))
-                score+=5;
+
+        for(String str:array) {
+            if (str.contains("*")) {
+
+                if (str.contains("answer:Never"))
+                    score += 5;
+                if (str.equals("answer:Rarely"))
+                    score += 4;
+                if (str.equals("answer:Occasionally"))
+                    score += 3;
+                if (str.equals("answer:Regularly"))
+                    score += 2;
+                if (str.equals("answer:Always"))
+                    score += 1;
+
+            } else {
+                if (str.contains("answer:Never"))
+                    score += 1;
+                if (str.equals("answer:Rarely"))
+                    score += 2;
+                if (str.equals("answer:Occasionally"))
+                    score += 3;
+                if (str.equals("answer:Regularly"))
+                    score += 4;
+                if (str.equals("answer:Always"))
+                    score += 5;
+            }
         }
         return score;
     }
