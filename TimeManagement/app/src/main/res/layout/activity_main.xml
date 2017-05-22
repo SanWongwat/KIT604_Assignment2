@@ -25,7 +25,9 @@
     <ListView
         android:id="@+id/lv_main"
         android:layout_width="match_parent"
-        android:layout_height="250dp">
+        android:layout_height="250dp"
+        android:divider="@color/colorAccent"
+        android:dividerHeight="1.0sp">
     </ListView>
         <TextView
             android:id="@+id/TMQ_score"

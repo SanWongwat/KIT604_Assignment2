@@ -193,12 +193,6 @@ public class EditActivity extends AppCompatActivity implements AdapterView.OnIte
 
         setUnitCodeSpinner();
 
-        ToggleButton tgb_notify = (ToggleButton) findViewById(R.id.tgb_edit_notify);
-        if (mTask.isNotify().equals(getString(R.string.N)))
-            tgb_notify.setChecked(false);
-        else if (mTask.isNotify().equals(getString(R.string.Y)))
-            tgb_notify.setChecked(true);
-
         CheckBox cb_complete = (CheckBox) findViewById(R.id.cb_edit_complete);
         if (mTask.getCompletion().equals(getString(R.string.N)))
             cb_complete.setChecked(false);
@@ -297,6 +291,29 @@ public class EditActivity extends AppCompatActivity implements AdapterView.OnIte
     }
 
     public void EditTask(View view) {
+        String title = ((EditText) findViewById(R.id.et_edit_title)).getText().toString();
+        String duedate = ((EditText) findViewById(R.id.et_edit_duedate)).getText().toString();
+        String empty = "";
+        StringWithTag uSWT = (StringWithTag) ((Spinner) findViewById(R.id.spn_edit_unitcode))
+                .getSelectedItem();
+        if (title.equalsIgnoreCase(empty)) {
+            AlertDialog.Builder bldr = Util.AlertDialogBuilder(this
+                    , getString(R.string.validate_input), getString(R.string.validate_title));
+            bldr.create().show();
+            return;
+        }
+        if (duedate.equalsIgnoreCase(empty)) {
+            AlertDialog.Builder bldr = Util.AlertDialogBuilder(this
+                    , getString(R.string.validate_input), getString(R.string.validate_duedate));
+            bldr.create().show();
+            return;
+        }
+        if (uSWT.getTag().toString().equalsIgnoreCase(empty)) {
+            AlertDialog.Builder bldr = Util.AlertDialogBuilder(this
+                    , getString(R.string.validate_input), getString(R.string.validate_unitcode));
+            bldr.create().show();
+            return;
+        }
         Task t = new Task();
 
         t.setKey(mTask.getKey());
@@ -307,8 +324,6 @@ public class EditActivity extends AppCompatActivity implements AdapterView.OnIte
 
         t.setTime(((EditText) findViewById(R.id.et_edit_time)).getText().toString());
 
-        StringWithTag uSWT = (StringWithTag) ((Spinner) findViewById(R.id.spn_edit_unitcode))
-                .getSelectedItem();
         String uKey = uSWT.getTag().toString();
         Unit u = new Unit();
         u.setKey(Integer.parseInt(uKey));
@@ -322,11 +337,6 @@ public class EditActivity extends AppCompatActivity implements AdapterView.OnIte
 
         t.setWeight(((EditText) findViewById(R.id.et_edit_weight)).getText().toString());
 
-        String notify = getString(R.string.N);
-        ToggleButton tgb_notify = (ToggleButton) findViewById(R.id.tgb_edit_notify);
-        if (tgb_notify.isChecked()) notify = getString(R.string.Y);
-        t.setNotify(notify);
-
         t.setDetail(((EditText) findViewById(R.id.et_edit_detail)).getText().toString());
 
         String complete = getString(R.string.N);
@@ -335,7 +345,7 @@ public class EditActivity extends AppCompatActivity implements AdapterView.OnIte
         t.setCompletion(complete);
 
         if (bu.EditTask(t)) {
-            Toast toast = Toast.makeText(this, R.string.edit_success, Toast.LENGTH_SHORT);
+            Toast toast = Toast.makeText(this, R.string.edit_task_success, Toast.LENGTH_SHORT);
             toast.show();
 
             Intent intent = new Intent();
@@ -360,5 +370,13 @@ public class EditActivity extends AppCompatActivity implements AdapterView.OnIte
     }
 
     public void onNothingSelected(AdapterView<?> parent) {
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (bu != null) {
+            bu.closeDB();
+        }
     }
 }

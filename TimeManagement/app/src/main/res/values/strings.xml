@@ -21,8 +21,10 @@
     <string name="dlg_weightpicker">Select weight</string>
     <string name="ok">OK</string>
     <string name="cancel">Cancel</string>
-    <string name="add_success">Successfully create a task.</string>
-    <string name="edit_success">Successfully edit a task.</string>
+    <string name="add_task_success">Successfully create a task.</string>
+    <string name="edit_task_success">Successfully edit a task.</string>
+    <string name="add_code_success">Successfully create a unit code.</string>
+    <string name="edit_code_success">Successfully edit a unit code.</string>
     <string name="Y">Y</string>
     <string name="yes">Yes</string>
     <string name="N">N</string>
@@ -42,11 +44,13 @@
     <string name="main_screen_tmq">Your Time Managment Questionnaire Score:</string>
     <string name="toolbar_edit">Edit</string>
     <string name="delete_success">Successfully delete the task</string>
+    <string name="validate_input">Invalid</string>
+    <string name="validate_title">Please specify title.</string>
+    <string name="validate_duedate">Please specify due date.</string>
+    <string name="validate_unitcode">Please choose a unit code.</string>
     <string-array name="sort_array">
         <item>Title</item>
         <item>Due Date</item>
-        <item>Important</item>
-        <item>Unit Code</item>
     </string-array>
     <string-array name="questions_type">
         <item>Short-rang Planning</item>

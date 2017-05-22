@@ -89,7 +89,8 @@ public class MainActivity extends AppCompatActivity {
 
     private void PopulateListView() {
         BU bu = new BU(this);
-        mTaskList = bu.RetrieveBriefTaskInfo();
+        mTaskList = bu.RetrieveBriefTaskInfo(false);
+        bu.closeDB();
         Collections.sort(mTaskList, Task.DueDateComparator);
         if (mTaskList.size() > 4) {
             for (int i = 4; i < mTaskList.size(); i++) {

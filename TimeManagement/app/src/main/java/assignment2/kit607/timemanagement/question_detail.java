@@ -1,8 +1,13 @@
 package assignment2.kit607.timemanagement;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
@@ -23,6 +28,26 @@ public class question_detail extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_question_detail);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                if (item.getItemId() == R.id.btn_toolbar_back) {
+                    AlertDialog.Builder bldr = Util.AlertDialogBuilder(question_detail.this
+                            , getString(R.string.confirm_cancel_addEdit_title), getString(R.string.confirm_cancel_addEdit_message));
+                    bldr.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            question_detail.this.finish();
+                        }
+                    });
+                    bldr.create().show();
+                }
+
+                return false;
+            }
+        });
        listView =(ListViewForScrollView)findViewById(R.id.question_detail);
         if(this.getIntent()!=null){
             Intent i=getIntent();
@@ -90,7 +115,12 @@ public class question_detail extends AppCompatActivity {
 
         });
     }
-
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu_edit_delete; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu, menu);
+        return true;
+    }
     public void LoadShortQ(){
         identifier=1;
         String[] shortQ=q.getShortQ();

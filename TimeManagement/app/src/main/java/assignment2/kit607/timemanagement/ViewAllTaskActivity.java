@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -12,8 +11,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.CompoundButton;
 import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -28,7 +29,10 @@ public class ViewAllTaskActivity extends AppCompatActivity implements AdapterVie
 
     private final String TAG = "ViewAllTaskActivity";
     private final int tag_key = 0;
+    private boolean showComplete = false;
     List<Task> mTaskList = new ArrayList<Task>();
+    List<Task> mIncompleteList = new ArrayList<Task>();
+    List<Task> mTempList = new ArrayList<Task>();
     TaskListAdapter mTaskListAdapter = null;
     BU bu = new BU(this);
 
@@ -51,6 +55,27 @@ public class ViewAllTaskActivity extends AppCompatActivity implements AdapterVie
             }
         });
         SetupSorting();
+        Switch sw = (Switch) findViewById(R.id.tgb_view_showCompleted);
+        sw.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                showComplete = isChecked;
+                if (isChecked) mTempList = mTaskList;
+                else mTempList = mIncompleteList;
+                mTaskListAdapter = new TaskListAdapter();
+                ListView taskListView = (ListView) findViewById(R.id.lw_TaskList);
+                taskListView.setAdapter(mTaskListAdapter);
+                taskListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                        Task t = (Task)adapterView.getItemAtPosition(position);
+                        Intent intent = new Intent(ViewAllTaskActivity.this, ViewTaskDetailActivity.class);
+                        intent.putExtra(TaskTable.KEY, t.getKey());
+                        startActivity(intent);
+                    }
+                });
+            }
+        });
         PopulateListView();
 
     }
@@ -72,14 +97,24 @@ public class ViewAllTaskActivity extends AppCompatActivity implements AdapterVie
 
     private void PopulateListView() {
         BU bu = new BU(this);
-        mTaskList = bu.RetrieveBriefTaskInfo();
+        mTaskList = bu.RetrieveBriefTaskInfo(true);
+        mIncompleteList.clear();
+        for (Task t : mTaskList) {
+            String a = t.getCompletion();
+            String b = getString(R.string.N);
+            if (a.equals(b))
+                mIncompleteList.add(t);
+        }
+        if (showComplete) mTempList = mTaskList;
+        else mTempList = mIncompleteList;
+        Collections.sort(mTempList, Task.TaskTitleComparator);
         mTaskListAdapter = new TaskListAdapter();
         ListView taskListView = (ListView) findViewById(R.id.lw_TaskList);
         taskListView.setAdapter(mTaskListAdapter);
         taskListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-                Task t = mTaskList.get(position);
+                Task t = (Task) adapterView.getItemAtPosition(position);
                 Intent intent = new Intent(ViewAllTaskActivity.this, ViewTaskDetailActivity.class);
                 intent.putExtra(TaskTable.KEY, t.getKey());
                 startActivity(intent);
@@ -95,39 +130,57 @@ public class ViewAllTaskActivity extends AppCompatActivity implements AdapterVie
     }
 
     public void onItemSelected(AdapterView<?> parent, View view,
-                               int pos, long id) {
+                               final int pos, long id) {
         // An item was selected. You can retrieve the selected item using
         // parent.getItemAtPosition(pos)
 //        String[] sortedArray = getResources().getStringArray(R.array.sort_array);
 //        String selectedItem = parent.getItemAtPosition(pos).toString();
         if (pos == 0) {
             //sort by title
-            Collections.sort(mTaskList, Task.TaskTitleComparator);
+            Collections.sort(mTempList, Task.TaskTitleComparator);
 
         } else if (pos == 1) {
             // sort by due date
-
-            Collections.sort(mTaskList, Task.DueDateComparator);
-        } else if (pos == 2) {
-            // sort by unit code
+            Collections.sort(mTempList, Task.DueDateComparator);
         }
+        if (showComplete) mTempList = mTaskList;
+        else mTempList = mIncompleteList;
+        mTaskListAdapter = new TaskListAdapter();
+        ListView taskListView = (ListView) findViewById(R.id.lw_TaskList);
+        taskListView.setAdapter(mTaskListAdapter);
+        taskListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                Task t = (Task)adapterView.getItemAtPosition(position);
+                Intent intent = new Intent(ViewAllTaskActivity.this, ViewTaskDetailActivity.class);
+                intent.putExtra(TaskTable.KEY, t.getKey());
+                startActivity(intent);
+            }
+        });
     }
 
     public void onNothingSelected(AdapterView<?> parent) {
         // Another interface callback
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (bu != null) {
+            bu.closeDB();
+        }
+    }
 
     class TaskListAdapter extends ArrayAdapter<Task> {
         TaskListAdapter() {
-            super(ViewAllTaskActivity.this, android.R.layout.simple_list_item_1, mTaskList);
+            super(ViewAllTaskActivity.this, android.R.layout.simple_list_item_1, mTempList);
         }
 
         public View getView(int position, View row, ViewGroup parent) {
 
             LayoutInflater inflater = getLayoutInflater();
             row = inflater.inflate(R.layout.task_listrow, null);
-            Task t = mTaskList.get(position);
+            Task t = mTempList.get(position);
             TextView title = (TextView) row.findViewById(R.id.tv_viewrow_title);
             title.setText(t.getTitle());
 

@@ -220,16 +220,37 @@ public class AddActivity extends AppCompatActivity implements AdapterView.OnItem
 
     //add task
     public void AddTask(View view) {
+        String title= ((EditText) findViewById(R.id.et_add_title)).getText().toString();
+        String duedate = ((EditText) findViewById(R.id.et_add_duedate)).getText().toString();
+        String empty = "";
+        StringWithTag uSWT = (StringWithTag) ((Spinner) findViewById(R.id.spn_add_unitcode))
+                .getSelectedItem();
+        if(title.equalsIgnoreCase(empty) ){
+            AlertDialog.Builder bldr = Util.AlertDialogBuilder(this
+                    , getString(R.string.validate_input), getString(R.string.validate_title));
+            bldr.create().show();
+            return;
+        }
+        if(duedate.equalsIgnoreCase(empty)){
+            AlertDialog.Builder bldr = Util.AlertDialogBuilder(this
+                    , getString(R.string.validate_input), getString(R.string.validate_duedate));
+            bldr.create().show();
+            return;
+        }
+        if(uSWT.getTag().toString().equalsIgnoreCase(empty)){
+            AlertDialog.Builder bldr = Util.AlertDialogBuilder(this
+                    , getString(R.string.validate_input), getString(R.string.validate_unitcode));
+            bldr.create().show();
+            return;
+        }
         Task t = new Task();
 
-        t.setTitle(((EditText) findViewById(R.id.et_add_title)).getText().toString());
+        t.setTitle(title);
 
-        t.setDuedate(((EditText) findViewById(R.id.et_add_duedate)).getText().toString());
+        t.setDuedate(duedate);
 
         t.setTime(((EditText) findViewById(R.id.et_add_time)).getText().toString());
 
-        StringWithTag uSWT = (StringWithTag) ((Spinner) findViewById(R.id.spn_add_unitcode))
-                .getSelectedItem();
         String uKey = uSWT.getTag().toString();
         Unit u = new Unit();
         Log.d(TAG, uKey);
@@ -244,11 +265,6 @@ public class AddActivity extends AppCompatActivity implements AdapterView.OnItem
 
         t.setWeight(((EditText) findViewById(R.id.et_add_weight)).getText().toString());
 
-        String notify = getString(R.string.N);
-        ToggleButton tgb_notify = (ToggleButton) findViewById(R.id.tgb_add_notify);
-        if (tgb_notify.isChecked()) notify = getString(R.string.Y);
-        t.setNotify(notify);
-
         t.setDetail(((EditText) findViewById(R.id.et_add_detail)).getText().toString());
 
         t.setCompletion(getString(R.string.N));
@@ -256,7 +272,7 @@ public class AddActivity extends AppCompatActivity implements AdapterView.OnItem
 
         Toast toast;
         if (bu.InsertTask(t)) {
-            toast = Toast.makeText(this, R.string.add_success, Toast.LENGTH_SHORT);
+            toast = Toast.makeText(this, R.string.add_task_success, Toast.LENGTH_SHORT);
             toast.show();
             finish();
         }
@@ -295,5 +311,13 @@ public class AddActivity extends AppCompatActivity implements AdapterView.OnItem
     }
 
     public void onNothingSelected(AdapterView<?> parent) {
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (bu != null) {
+            bu.closeDB();
+        }
     }
 }

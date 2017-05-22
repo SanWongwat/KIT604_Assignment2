@@ -7,24 +7,26 @@
     <TextView
         android:id="@+id/tv_viewrow_title"
         android:layout_width="match_parent"
-        android:layout_height="30dp" />
+        android:layout_height="30dp"
+        android:layout_marginLeft="@dimen/input_gap" />
 
     <TextView
         android:id="@+id/tv_viewrow_duedate"
         android:layout_width="match_parent"
-        android:layout_height="30dp" />
+        android:layout_height="30dp"
+        android:layout_marginLeft="@dimen/input_gap" />
 
     <TextView
         android:id="@+id/tv_viewrow_time"
         android:layout_width="match_parent"
-        android:layout_height="30dp" />
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+        android:layout_height="30dp"
+    android:layout_marginLeft="@dimen/input_gap"/>
 
     <TextView
         android:id="@+id/tv_viewrow_completion"
         android:layout_width="match_parent"
-        android:layout_height="30dp" />
+        android:layout_height="30dp"
+        android:layout_marginLeft="@dimen/input_gap" />
 
 
 </LinearLayout>

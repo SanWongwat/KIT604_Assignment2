@@ -25,7 +25,8 @@
         <EditText
             android:id="@+id/et_add_title"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:maxLength="30"/>
     </LinearLayout>
 
     <LinearLayout
@@ -156,8 +157,29 @@
             android:layout_height="wrap_content" />
     </LinearLayout>
 
+    <!--<LinearLayout-->
+        <!--android:id="@+id/ll_notify"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="40dp"-->
+        <!--android:layout_marginBottom="@dimen/input_gap"-->
+        <!--android:layout_marginLeft="@dimen/input_gap"-->
+        <!--android:orientation="horizontal"-->
+        <!--android:layout_below="@+id/ll_weight">-->
+
+        <!--<TextView-->
+            <!--android:layout_width="80dp"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:gravity="center|left"-->
+            <!--android:text="@string/notify" />-->
+
+        <!--<ToggleButton-->
+            <!--android:id="@+id/tgb_add_notify"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content" />-->
+    <!--</LinearLayout>-->
+
     <LinearLayout
-        android:id="@+id/ll_notify"
+        android:id="@+id/ll_detail"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_marginBottom="@dimen/input_gap"
@@ -169,33 +191,16 @@
             android:layout_width="80dp"
             android:layout_height="match_parent"
             android:gravity="center|left"
-            android:text="@string/notify" />
-
-        <ToggleButton
-            android:id="@+id/tgb_add_notify"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/ll_detail"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_marginBottom="@dimen/input_gap"
-        android:layout_marginLeft="@dimen/input_gap"
-        android:orientation="horizontal"
-        android:layout_below="@+id/ll_notify">
-
-        <TextView
-            android:layout_width="80dp"
-            android:layout_height="match_parent"
-            android:gravity="center|left"
             android:text="@string/detail" />
 
         <EditText
             android:id="@+id/et_add_detail"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:inputType="textMultiLine"
+            android:minLines="4"
+            android:maxLines="6"
+            android:maxLength="150"/>
     </LinearLayout>
 
     <Button

@@ -82,7 +82,7 @@ public class EditUnitCodeActivity extends AppCompatActivity {
                 u.setUnitName(((EditText)findViewById(R.id.et_edit_unitName)).getText().toString());
 
                 if(bu.EditUnitCode(u)){
-                    Toast toast = Toast.makeText(EditUnitCodeActivity.this, R.string.edit_success, Toast.LENGTH_SHORT);
+                    Toast toast = Toast.makeText(EditUnitCodeActivity.this, R.string.edit_code_success, Toast.LENGTH_SHORT);
                     toast.show();
                     finish();
                 }
@@ -98,5 +98,12 @@ public class EditUnitCodeActivity extends AppCompatActivity {
         // Inflate the menu_edit_delete; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_delete, menu);
         return true;
+    }
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (bu != null) {
+            bu.closeDB();
+        }
     }
 }

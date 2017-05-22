@@ -16,7 +16,6 @@ class TaskTable {
     public static final String COLUMN_NAME_URGENCY = "Urgency";
     public static final String COLUMN_NAME_IMPORTANT = "Important";
     public static final String COLUMN_NAME_WEIGHT = "Weight";
-    public static final String COLUMN_NAME_NOTIFY = "Notify";
     public static final String COLUMN_NAME_DETAIL = "Detail";
     public static final String COLUMN_NAME_COMPLETE = "Complete";
 

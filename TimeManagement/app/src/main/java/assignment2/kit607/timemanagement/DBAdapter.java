@@ -35,7 +35,6 @@ public class DBAdapter {
         values.put(TaskTable.COLUMN_NAME_URGENCY, task.getUrgency());
         values.put(TaskTable.COLUMN_NAME_IMPORTANT, task.getImportant());
         values.put(TaskTable.COLUMN_NAME_WEIGHT, task.getWeight());
-        values.put(TaskTable.COLUMN_NAME_NOTIFY, task.isNotify());
         values.put(TaskTable.COLUMN_NAME_DETAIL, task.getDetail());
         values.put(TaskTable.COLUMN_NAME_COMPLETE, task.getCompletion());
         try {
@@ -48,7 +47,7 @@ public class DBAdapter {
     }
 
 
-    public Cursor GetBriefTaskInfo() {
+    public Cursor GetBriefTaskInfo(boolean complete) {
         sdb = dbHelper.getReadableDatabase();
         String[] projection = {
                 TaskTable.KEY,
@@ -57,8 +56,13 @@ public class DBAdapter {
                 TaskTable.COLUMN_NAME_TIME,
                 TaskTable.COLUMN_NAME_COMPLETE
         };
-        return sdb.query(TaskTable.TABLE_NAME, projection, null, null, null, null, null);
-
+        if (complete) {
+            return sdb.query(TaskTable.TABLE_NAME, projection, null, null, null, null, null);
+        }else{
+            String selection = TaskTable.COLUMN_NAME_COMPLETE + " = ?";
+            String[] selectionArgs = {"N"};
+            return sdb.query(TaskTable.TABLE_NAME, projection, selection, selectionArgs, null, null, null);
+        }
 
     }
 
@@ -183,7 +187,6 @@ public class DBAdapter {
         values.put(TaskTable.COLUMN_NAME_URGENCY, t.getUrgency());
         values.put(TaskTable.COLUMN_NAME_IMPORTANT, t.getImportant());
         values.put(TaskTable.COLUMN_NAME_WEIGHT, t.getWeight());
-        values.put(TaskTable.COLUMN_NAME_NOTIFY, t.isNotify());
         values.put(TaskTable.COLUMN_NAME_DETAIL, t.getDetail());
         values.put(TaskTable.COLUMN_NAME_COMPLETE, t.getCompletion());
         String selection = TaskTable.KEY + " = ?";
@@ -220,6 +223,16 @@ public class DBAdapter {
 
     }
 
+    public void close() {
+        Log.d(TAG, "close");
+        if (sdb != null) {
+            sdb.close();
+            sdb = null;    // This is important as garbage collection may
+            // not have occured by the time the Activities
+            // need to know whether they should recreated the
+            // DB.
+        }
+    } // close
 
     private class TMDbHelper extends SQLiteOpenHelper {
         public static final String TAG = "TMDbHelper";
@@ -236,7 +249,6 @@ public class DBAdapter {
                 + TaskTable.COLUMN_NAME_URGENCY + " STRING, "
                 + TaskTable.COLUMN_NAME_IMPORTANT + " STRING, "
                 + TaskTable.COLUMN_NAME_WEIGHT + " STRING, "
-                + TaskTable.COLUMN_NAME_NOTIFY + " STRING, "
                 + TaskTable.COLUMN_NAME_COMPLETE + " STRING, "
                 + TaskTable.COLUMN_NAME_DETAIL + " STRING);";
         //sql statement for creating unitcode table

@@ -40,8 +40,8 @@ public class BU {
         return unitList;
     }
 
-    public List<Task> RetrieveBriefTaskInfo() {
-        Cursor cursor = db.GetBriefTaskInfo();
+    public List<Task> RetrieveBriefTaskInfo(boolean complete) {
+        Cursor cursor = db.GetBriefTaskInfo(complete);
         if (cursor != null) {
             if (cursor.getCount() == 0) {
 
@@ -110,7 +110,6 @@ public class BU {
             t.setUrgency(cursor.getString(cursor.getColumnIndex(TaskTable.COLUMN_NAME_URGENCY)));
             t.setImportant(cursor.getString(cursor.getColumnIndex(TaskTable.COLUMN_NAME_IMPORTANT)));
             t.setWeight(cursor.getString(cursor.getColumnIndex(TaskTable.COLUMN_NAME_WEIGHT)));
-            t.setNotify(cursor.getString(cursor.getColumnIndex(TaskTable.COLUMN_NAME_NOTIFY)));
             t.setCompletion(cursor.getString(cursor.getColumnIndex(TaskTable.COLUMN_NAME_COMPLETE)));
             t.setDetail(cursor.getString(cursor.getColumnIndex(TaskTable.COLUMN_NAME_DETAIL)));
             cursor.moveToNext();
@@ -145,5 +144,17 @@ public class BU {
 
     public boolean DeleteUnitCode(int key) {
         return db.DeleteUnitCode(key);
+    }
+
+    public void closeDB(){
+        if(db!=null){
+            db.close();
+            db = null;
+        }
+        if(csr!=null){
+            csr.close();
+            csr=null;
+        }
+
     }
 }

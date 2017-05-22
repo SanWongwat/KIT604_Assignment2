@@ -1,21 +1,15 @@
 package assignment2.kit607.timemanagement;
 
-import android.app.Dialog;
-import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.CalendarView;
 import android.widget.EditText;
 import android.widget.Toast;
-
-import java.util.Date;
 
 /**
  * Created by Allen on 5/8/2017.
@@ -24,6 +18,7 @@ import java.util.Date;
 public class AddUnitCodeActivity extends AppCompatActivity {
 
     private final String TAG = "AddUnitCodeActivity";
+    BU bu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,13 +68,21 @@ public class AddUnitCodeActivity extends AppCompatActivity {
         Unit u = new Unit();
         u.setUnitId(id);
         u.setUnitName(name);
-        BU bu = new BU(this);
+        bu = new BU(this);
         if (bu.AddNewUnitCode(u)) {
             Toast toast;
-            toast = Toast.makeText(this, R.string.add_success, Toast.LENGTH_SHORT);
+            toast = Toast.makeText(this, R.string.add_code_success, Toast.LENGTH_SHORT);
             toast.show();
             finish();
 
+        }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (bu != null) {
+            bu.closeDB();
         }
     }
 }

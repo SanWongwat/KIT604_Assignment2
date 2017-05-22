@@ -26,6 +26,7 @@ import java.util.List;
 
 public class ViewAllUnitCodeActivity extends AppCompatActivity {
     private final String TAG = "ViewAllUnitCodeActivity";
+    BU bu;
     List<Unit> mUnitList = new ArrayList<Unit>();
     UnitListAdapter mUnitListAdapter = null;
 
@@ -62,14 +63,20 @@ public class ViewAllUnitCodeActivity extends AppCompatActivity {
     }
 
     private void PopulateListView() {
-        BU bu = new BU(this);
+        bu = new BU(this);
         mUnitList = bu.GetUnitCode();
         mUnitListAdapter = new UnitListAdapter();
         ListView taskListView = (ListView) findViewById(R.id.lv_unitCode);
         taskListView.setAdapter(mUnitListAdapter);
     }
 
-
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (bu != null) {
+            bu.closeDB();
+        }
+    }
 
     class UnitListAdapter extends ArrayAdapter<Unit> {
         UnitListAdapter() {
@@ -104,7 +111,7 @@ public class ViewAllUnitCodeActivity extends AppCompatActivity {
                     bldr.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
-                            BU bu = new BU(ViewAllUnitCodeActivity.this);
+                            bu = new BU(ViewAllUnitCodeActivity.this);
                             int key = mUnitList.get(p).getKey();
                             if(bu.DeleteUnitCode(key)){
                                 Toast toast;

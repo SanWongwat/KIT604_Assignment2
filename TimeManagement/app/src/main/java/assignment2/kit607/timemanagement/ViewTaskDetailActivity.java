@@ -29,7 +29,7 @@ public class ViewTaskDetailActivity extends AppCompatActivity {
         int key = pIntent.getIntExtra(TaskTable.KEY, 0);
         BU bu = new BU(this);
         mTask = bu.GetTaskDetail(key);
-
+        bu.closeDB();
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
@@ -94,18 +94,12 @@ public class ViewTaskDetailActivity extends AppCompatActivity {
         setTextView(R.id.tv_detail_category, category);
         setTextView(R.id.tv_detail_weight, t.getWeight());
 
-        String mNotify = t.isNotify();
-        String notification = "";
-        if (mNotify.equals(getString(R.string.N))) notification = getString(R.string.no);
-        else if (mNotify.equals(getString(R.string.Y))) notification = getString(R.string.yes);
-        setTextView(R.id.tv_detail_notify, notification);
-
         setTextView(R.id.tv_detail_detail, t.getDetail());
 
         String mComplete = t.getCompletion();
         String completion = "";
-        if (mComplete.equals(getString(R.string.N))) completion = getString(R.string.no);
-        else if (mComplete.equals(getString(R.string.Y))) completion = getString(R.string.yes);
+        if (mComplete.equals(getString(R.string.N))) completion = getString(R.string.incomplete);
+        else if (mComplete.equals(getString(R.string.Y))) completion = getString(R.string.completed);
         setTextView(R.id.tv_detail_complete, completion);
 
     }

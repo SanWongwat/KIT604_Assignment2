@@ -22,7 +22,6 @@ class Task implements Parcelable, Comparable<Task> {
     private String Urgency;
     private String Important;
     private String Weight;
-    private String Notify;
     private String Detail;
     private String Completion;
 
@@ -44,7 +43,6 @@ class Task implements Parcelable, Comparable<Task> {
         out.writeString(Urgency);
         out.writeString(Important);
         out.writeString(Weight);
-        out.writeString(Notify);
         out.writeString(Detail);
         out.writeString(Completion);
     }
@@ -57,7 +55,6 @@ class Task implements Parcelable, Comparable<Task> {
         Urgency = in.readString();
         Important = in.readString();
         Weight = in.readString();
-        Notify = in.readString();
         Detail = in.readString();
         Completion = in.readString();
     }
@@ -127,14 +124,6 @@ class Task implements Parcelable, Comparable<Task> {
 
     public void setWeight(String weight) {
         this.Weight = weight;
-    }
-
-    public String isNotify() {
-        return Notify;
-    }
-
-    public void setNotify(String notify) {
-        this.Notify = notify;
     }
 
     public String getDetail() {
