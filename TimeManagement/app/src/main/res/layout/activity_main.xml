@@ -20,68 +20,11 @@
        android:gravity="center"
        android:layout_marginBottom="2dp"
        />
-
-
-
-    <TextView
-        android:id="@+id/top_1_task"
+    <ListView
+        android:id="@+id/lv_main"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/main_scree_task_height"
-        android:layout_marginBottom="2dp"
-        android:height="@dimen/main_scree_task_height"
-        android:background="@color/white"
-        android:text="@string/title"
-        android:textColor="@color/black" />
-
-
-        />
-    <TextView
-        android:id="@+id/top_2_task"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/main_scree_task_height"
-        android:text="@string/title"
-        android:textColor="@color/black"
-        android:height="@dimen/main_scree_task_height"
-        android:background="@color/white"
-        android:layout_marginBottom="2dp"
-        />
-
-
-       />
-    <TextView
-        android:id="@+id/top_3_task"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/main_scree_task_height"
-        android:text="@string/title"
-        android:textColor="@color/black"
-        android:height="@dimen/main_scree_task_height"
-        android:background="@color/white"
-        android:layout_marginBottom="2dp"
-       />
-
-        />
-    <TextView
-        android:id="@+id/top_4_task"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/main_scree_task_height"
-        android:text="@string/title"
-        android:textColor="@color/black"
-        android:height="@dimen/main_scree_task_height"
-        android:background="@color/white"
-        android:layout_marginBottom="2dp"
-       />
-
-
-    <TextView
-        android:id="@+id/top_5_task"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/main_scree_task_height"
-        android:text="@string/title"
-        android:textColor="@color/black"
-        android:height="@dimen/main_scree_task_height"
-        android:background="@color/white"
-        android:layout_marginBottom="2dp"
-        />
+        android:layout_height="250dp">
+    </ListView>
         <TextView
             android:id="@+id/TMQ_score"
             android:layout_width="match_parent"
