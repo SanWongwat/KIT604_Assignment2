@@ -5,7 +5,6 @@
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/grey"
     tools:context="assignment2.kit607.timemanagement.MainActivity"
     android:weightSum="1">
 
@@ -41,7 +40,6 @@
         <Button
             android:layout_width="@dimen/main_screen_button_width"
             android:layout_height="@dimen/main_screen_button_height"
-            android:layout_marginLeft="@dimen/main_screen_button_margin_left"
             android:layout_marginTop="@dimen/main_screen_button_margin_top"
             android:id="@+id/main_activity_button_new_task"
             android:text="New Task"
@@ -50,15 +48,13 @@
             android:layout_width="@dimen/main_screen_button_width"
             android:layout_height="@dimen/main_screen_button_height"
             android:id="@+id/main_activity_button_view_task"
-            android:layout_marginLeft="@dimen/main_screen_button_margin_left"
             android:layout_marginTop="@dimen/main_screen_button_margin_top"
             android:text="View Task"
-            android:layout_toRightOf="@+id/main_activity_button_new_task"
+            android:layout_alignParentRight="true"
             />
         <Button
             android:layout_width="@dimen/main_screen_button_width"
             android:layout_height="@dimen/main_screen_button_height"
-            android:layout_marginLeft="@dimen/main_screen_button_margin_left"
             android:id="@+id/main_activity_button_TMQ"
             android:text="TMQ"
             android:layout_below="@+id/main_activity_button_new_task"
@@ -67,10 +63,9 @@
             android:layout_width="@dimen/main_screen_button_width"
             android:layout_height="@dimen/main_screen_button_height"
             android:id="@+id/main_activity_button_setting"
-            android:layout_marginLeft="@dimen/main_screen_button_margin_left"
             android:text="Setting"
             android:layout_below="@+id/main_activity_button_view_task"
-            android:layout_toRightOf="@+id/main_activity_button_TMQ"
+            android:layout_alignParentRight="true"
             />
     </RelativeLayout>
 

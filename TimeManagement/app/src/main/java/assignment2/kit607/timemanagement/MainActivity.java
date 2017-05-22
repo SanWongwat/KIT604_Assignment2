@@ -17,6 +17,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -33,8 +34,9 @@ public class MainActivity extends AppCompatActivity {
         initiateMainActivity();
 
     }
-    private void initiateMainActivity(){
-        Button btn_newTask = (Button)findViewById(R.id.main_activity_button_new_task);
+
+    private void initiateMainActivity() {
+        Button btn_newTask = (Button) findViewById(R.id.main_activity_button_new_task);
         btn_newTask.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -42,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-        Button btn_viewAllTask = (Button)findViewById(R.id.main_activity_button_view_task);
+        Button btn_viewAllTask = (Button) findViewById(R.id.main_activity_button_view_task);
         btn_viewAllTask.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -51,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        Button btn_setting = (Button)findViewById(R.id.main_activity_button_setting);
+        Button btn_setting = (Button) findViewById(R.id.main_activity_button_setting);
         btn_setting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -60,26 +62,33 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         PopulateListView();
-        Button tmq=(Button)findViewById(R.id.main_activity_button_TMQ);
-        tmq.setOnClickListener(new View.OnClickListener(){
+        Button tmq = (Button) findViewById(R.id.main_activity_button_TMQ);
+        tmq.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v){
+            public void onClick(View v) {
                 Intent i = new Intent(MainActivity.this, tmqList.class);
                 startActivity(i);
             }
         });
         Intent i = getIntent();
-        Bundle b =i.getBundleExtra("score");
-        if(b!=null){
+        Bundle b = i.getBundleExtra("score");
+        if (b != null) {
 
             int s = b.getInt("score");
-            TextView t= (TextView)findViewById(R.id.TMQ_score);
-            t.setText("Your Time Managment Questionnaire Score:"+"\n"+s);
+            TextView t = (TextView) findViewById(R.id.TMQ_score);
+            t.setText("Your Time Managment Questionnaire Score:" + "\n" + s);
         }
     }
+
     private void PopulateListView() {
         BU bu = new BU(this);
         mTaskList = bu.RetrieveBriefTaskInfo();
+        Collections.sort(mTaskList, Task.DueDateComparator);
+        if (mTaskList.size() > 4) {
+            for (int i = 4; i < mTaskList.size(); i++) {
+                mTaskList.remove(i);
+            }
+        }
         mTaskListAdapter = new TaskListAdapter();
         ListView taskListView = (ListView) findViewById(R.id.lv_main);
         taskListView.setAdapter(mTaskListAdapter);
@@ -93,14 +102,15 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
     protected void AddUnitCode(View view) {
         Intent intent = new Intent(this, AddUnitCodeActivity.class);
         startActivity(intent);
     }
 
-    protected void ShowDialog(View view){
+    protected void ShowDialog(View view) {
         DialogFragment df = new CalendarDialogFragment();
-        df.show(getFragmentManager(),"Calendar");
+        df.show(getFragmentManager(), "Calendar");
     }
 
     class TaskListAdapter extends ArrayAdapter<Task> {
