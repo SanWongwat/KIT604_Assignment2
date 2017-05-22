@@ -7,7 +7,10 @@
     android:layout_height="match_parent"
     tools:context="assignment2.kit607.timemanagement.MainActivity"
     android:weightSum="1">
-
+    <include
+        layout="@layout/tool_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
    <TextView
        android:id="@+id/MainActivity_title"
        android:layout_width="match_parent"

@@ -5,6 +5,7 @@ import android.app.DialogFragment;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,10 +32,16 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
         initiateMainActivity();
 
     }
-
+    @Override
+    public void onResume(){
+        super.onResume();
+        PopulateListView();
+    }
     private void initiateMainActivity() {
         Button btn_newTask = (Button) findViewById(R.id.main_activity_button_new_task);
         btn_newTask.setOnClickListener(new View.OnClickListener() {
